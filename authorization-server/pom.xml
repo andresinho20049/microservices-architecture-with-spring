@@ -12,7 +12,7 @@
 	<artifactId>authorization-server</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>authorization-server</name>
-	<description>Demo project for Spring Boot</description>
+	<description>Secure auth and authorization server built with Spring Security, Oauth2, and JWT.</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -30,10 +30,7 @@
 		<java.version>17</java.version>
 	</properties>
 	<dependencies>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-r2dbc</artifactId>
-		</dependency>
+		<!-- Spring Security + Oauth2 Authorization Server -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-oauth2-authorization-server</artifactId>
@@ -42,11 +39,20 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
+		
+		<!-- Spring Webflux (Reactive Stack) -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-webflux</artifactId>
 		</dependency>
+		
+		<!-- Spring Reactive Relational Database Connectivity -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-r2dbc</artifactId>
+		</dependency>
 
+		<!-- Tests -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
