@@ -2,7 +2,7 @@
 Contribution Guidelines: Code Quality, Committing, and Collaboration
 
 ## Introduction:
-As we strive to build a robust and maintainable codebase for [Project Name], it is essential to establish a set of guidelines that support our development process. These guidelines are designed to ensure consistency and clarity in our coding practices.
+As we strive to build a robust and maintainable codebase, it is essential to establish a set of guidelines that support our development process. These guidelines are designed to ensure consistency and clarity in our coding practices.
 
 The following document outlines the conventions and best practices used in this project, including Java coding standards, Spring Boot configuration, security settings, and OAuth2 integration. By understanding these practices, you'll gain insight into how we work and be able to contribute effectively to our project.
 
