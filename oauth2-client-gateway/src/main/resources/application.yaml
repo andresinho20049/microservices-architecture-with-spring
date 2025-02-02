@@ -1,6 +1,10 @@
 server:
   port: 8000
 
+app:
+  frontend:
+    base-uri: http://localhost:3001
+
 spring:
   application:
     name: oauth2-client-gateway
@@ -12,18 +16,31 @@ spring:
             client-id: oidc-client
             client-secret: secret
             authorization-grant-type: authorization_code
-            redirect-uri: "http://localhost:8000/login/oauth2/code/{registrationId}"
+            redirect-uri: "http://localhost:8000/login/oauth2/code/oidc-client"
             provider: spring
-            scope: 
-              - openid
-              - profile
+            scope: openid,profile
+            client-name: oidc-client
+          bff-client:
+            client-id: bff-client
+            client-secret: secret
+            authorization-grant-type: authorization_code
+            redirect-uri: "http://localhost:3001/callback"
+            provider: spring
+            scope: openid,profile
+            client-name: bff-client
         provider:
           spring:
             issuer-uri: http://localhost:9000
   cloud:
     gateway:
       routes:
-      - id: bff
+#      - id: userinfo
+#        uri: http://localhost:9000
+#        predicates:
+#        - Path=/userinfo
+#        filters: 
+#        - TokenRelay=
+      - id: resource
         uri: http://localhost:8001
         predicates:
         - Path=/api/**
