@@ -17,6 +17,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.http.MediaType;
 import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -72,8 +73,9 @@ public class SecurityConfig {
 	@Order(2)
 	SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
 		http
+			.csrf(AbstractHttpConfigurer::disable)
 			.authorizeHttpRequests((authorize) -> authorize
-				.requestMatchers("/favicon.ico", "/resources/**", "/error").permitAll()
+				.requestMatchers("/favicon.ico", "/error").permitAll()
 				.anyRequest().authenticated()
 			).formLogin(withDefaults());
 
@@ -114,14 +116,29 @@ public class SecurityConfig {
 				.clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
 				.authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
 				.authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
+				.authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
 				.redirectUri("http://localhost:8000/login/oauth2/code/oidc-client")
 				.postLogoutRedirectUri("http://localhost:8000/")
 				.scope(OidcScopes.OPENID)
 				.scope(OidcScopes.PROFILE)
 				.clientSettings(ClientSettings.builder().requireAuthorizationConsent(false).build())
 				.build();
+		
+		RegisteredClient bffClient = RegisteredClient
+				.withId(UUID.randomUUID().toString())
+				.clientId("bff-client")
+				.clientSecret(passwordEncoder().encode("secret"))
+				.clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
+				.authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
+				.authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
+				.redirectUri("http://localhost:3001/callback")
+				.postLogoutRedirectUri("http://localhost:3001/")
+				.scope(OidcScopes.OPENID)
+				.scope(OidcScopes.PROFILE)
+				.clientSettings(ClientSettings.builder().requireAuthorizationConsent(false).build())
+				.build();
 
-		return new InMemoryRegisteredClientRepository(oidcClient);
+		return new InMemoryRegisteredClientRepository(oidcClient, bffClient);
 	}
 
 	@Bean
