@@ -10,10 +10,14 @@ import {
 } from "react";
 import usePersistedState from "@/hub/hooks/use-persisted-state";
 import { getUserInfoService, UserInfoType } from "@/hub/services/user-info";
+import { fetchGateway } from "../utils/gateway";
+import { redirect, RedirectType } from "next/navigation";
 
 type AuthenticationContextType = {
     isAuthenticated: boolean;
     userInfo: UserInfoType | null;
+    login: () => void;
+    logout: () => void;
 };
 
 const AuthenticationContext = createContext({} as AuthenticationContextType);
@@ -30,8 +34,18 @@ export const AuthenticationContextProvider = ({
 }: AuthenticationContextProviderType) => {
     const [userInfo, setUserInfo] = usePersistedState<UserInfoType | null>(
         "userInfo",
-        {} as UserInfoType
+        null
     );
+
+    const logout = useCallback(() => {
+        fetchGateway("/logout", { method: "POST" }).then(() => {
+            setUserInfo(null);
+        });
+    }, []);
+
+    const login = useCallback(() => {
+        redirect("/login", RedirectType.replace);
+    }, []);
 
     const checkIfUserInfoIsValid = useCallback(
         (userInfo: UserInfoType | null) => {
@@ -59,7 +73,9 @@ export const AuthenticationContextProvider = ({
     );
 
     return (
-        <AuthenticationContext.Provider value={{ isAuthenticated, userInfo }}>
+        <AuthenticationContext.Provider
+            value={{ isAuthenticated, userInfo, login, logout }}
+        >
             {children}
         </AuthenticationContext.Provider>
     );
