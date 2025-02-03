@@ -29,7 +29,7 @@ export default function RootLayout({
     return (
         <html lang="en" suppressHydrationWarning>
             <body
-                className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+                className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-dvh flex flex-col`}
             >
                 <ThemeProvider
                     attribute="class"
@@ -40,7 +40,7 @@ export default function RootLayout({
                         <header>
                             <NavBar />
                         </header>
-                        <main>{children}</main>
+                        <main className="flex-1">{children}</main>
                         <footer>
                             <FooterComponent />
                         </footer>
