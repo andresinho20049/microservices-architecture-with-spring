@@ -4,9 +4,10 @@ import defaultColors from "tailwindcss/colors";
 const customColors = {
     ...defaultColors,
     ...{
-        primary: defaultColors.blue[700],
-        second: defaultColors.orange[500],
-        accent: defaultColors.green[600],
+        primary: defaultColors.red[700],
+        second: defaultColors.blue[500],
+        accent: defaultColors.purple[600],
+        accentHover: defaultColors.purple[400],
     },
 };
 

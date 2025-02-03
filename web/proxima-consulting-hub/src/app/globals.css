@@ -27,6 +27,12 @@
     a {
         @apply text-base/normal font-medium tracking-normal text-cyan-200 hover:text-accent no-underline hover:underline decoration-accent;
     }
+    ul {
+        @apply list-inside list-disc;
+    }
+    ol {
+        @apply list-inside list-decimal;
+    }
 }
 
 @layer utilities {
