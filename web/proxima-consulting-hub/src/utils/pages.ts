@@ -14,7 +14,12 @@ export const pages: PageType[] = [
     },
     {
         label: "Customers",
-        href: "secured/customers",
+        href: "/secured/customers",
         requireLogged: true,
+    },
+    {
+        label: "About",
+        href: "/about",
+        requireLogged: false,
     },
 ];
