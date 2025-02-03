@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "../context/theme-context";
 import { AuthenticationContextProvider } from "../context/authentication-context";
 import { NavBar } from "../components/client/navbar/navbar";
+import { FooterComponent } from "../components/server/footer/footer";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -40,7 +41,9 @@ export default function RootLayout({
                             <NavBar />
                         </header>
                         <main>{children}</main>
-                        <footer></footer>
+                        <footer>
+                            <FooterComponent />
+                        </footer>
                     </AuthenticationContextProvider>
                 </ThemeProvider>
             </body>
