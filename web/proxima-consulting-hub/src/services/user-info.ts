@@ -1,3 +1,5 @@
+import { fetchGateway } from "../utils/gateway";
+
 type UserInfoType = {
     sub: string;
     aud: string[];
@@ -19,8 +21,6 @@ type RoleType = {
 export type { UserInfoType, RoleType };
 
 export const getUserInfoService = async () => {
-    const data = await fetch("http://localhost:8000/userinfo", {
-        credentials: "include",
-    });
+    const data = await fetchGateway("/userinfo");
     return await data.json();
 };
