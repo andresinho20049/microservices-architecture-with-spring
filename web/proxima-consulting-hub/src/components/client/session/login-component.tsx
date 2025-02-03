@@ -7,7 +7,7 @@ export const LoginComponent = () => {
     const { isAuthenticated, login, logout } = useAuthenticationContext();
 
     const linkText = isAuthenticated ? "Logout" : "Login";
-    const linkIcon = isAuthenticated ? "/padlock.svg" : "/key.svg";
+    const linkIcon = isAuthenticated ? "/icons/padlock.svg" : "/icons/key.svg";
 
     return (
         <button

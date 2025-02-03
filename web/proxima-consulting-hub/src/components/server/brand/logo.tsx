@@ -7,7 +7,7 @@ export const LogoComponent = () => {
             <Link href={"/"}>
                 <Image
                     alt="Logo"
-                    src={"/Logo.png"}
+                    src={"/imgs/Logo.png"}
                     width={471}
                     height={720}
                     className="w-12"
