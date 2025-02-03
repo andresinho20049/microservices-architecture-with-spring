@@ -1,11 +1,15 @@
+import { FullHeroSection } from "@/hub/components/server/section/full-hero-section";
+
 export default function Home() {
     return (
-        <div className="w-screen h-screen flex justify-center items-center  ">
-            <div>
-                <form action="http://localhost:8000/oauth2/authorization/bff-client">
-                    <button type="submit">Login</button>
-                </form>
-            </div>
-        </div>
+        <section>
+            <FullHeroSection
+                title="Proxima Consulting"
+                msg="Managing Success, One Project at a Time"
+                imgSrc="/imgs/Logo.png"
+                imgSide="Right"
+                urlLink="/about"
+            />
+        </section>
     );
 }
