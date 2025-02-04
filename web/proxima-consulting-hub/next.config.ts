@@ -2,6 +2,7 @@ import type { NextConfig } from "next";
 import { gatewayHost } from "./src/utils/gateway";
 
 const nextConfig: NextConfig = {
+    output: "standalone",
     rewrites: async () => {
         return {
             beforeFiles: [],
