@@ -72,12 +72,13 @@ public class SecurityConfig {
 	@Bean
 	@Order(2)
 	SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
+		
 		http
 			.csrf(AbstractHttpConfigurer::disable)
 			.authorizeHttpRequests((authorize) -> authorize
-				.requestMatchers("/favicon.ico", "/error").permitAll()
-				.anyRequest().authenticated()
-			).formLogin(withDefaults());
+				.requestMatchers("/actuator/health", "/favicon.ico", "/error").permitAll()
+				.anyRequest().authenticated())
+			.formLogin(withDefaults());
 
 		return http.build();
 	}
