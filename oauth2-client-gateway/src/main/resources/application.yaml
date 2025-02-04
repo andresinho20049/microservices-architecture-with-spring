@@ -1,10 +1,6 @@
 server:
   port: 8000
 
-app:
-  frontend:
-    base-uri: http://localhost:3001
-
 spring:
   application:
     name: oauth2-client-gateway
@@ -13,24 +9,24 @@ spring:
       client:
         registration:
           oidc-client:
-            client-id: oidc-client
-            client-secret: secret
+            client-id: ${RESOURCE_CLIENT_ID:resourceClient}
+            client-secret: ${RESOURCE_SECRET_ID:resourceSecret}
             authorization-grant-type: authorization_code
-            redirect-uri: "http://localhost:8000/login/oauth2/code/oidc-client"
+            redirect-uri: ${GATEWAY_HOST:http://localhost:8000}/login/oauth2/code/oidc-client
             provider: spring
             scope: openid,profile
             client-name: oidc-client
           bff-client:
-            client-id: bff-client
-            client-secret: secret
+            client-id: ${BFF_CLIENT_ID:bffClient}
+            client-secret: ${BFF_SECRET_ID:bffSecret}
             authorization-grant-type: authorization_code
-            redirect-uri: "http://localhost:3001/callback"
+            redirect-uri: ${WEB_HOST:http://localhost:3000}/callback
             provider: spring
             scope: openid,profile
             client-name: bff-client
         provider:
           spring:
-            issuer-uri: http://localhost:9000
+            issuer-uri: ${AUTHORIZATION_INTERNAL_HOST:http://authorization-server:9000}
   cloud:
     gateway:
       routes:

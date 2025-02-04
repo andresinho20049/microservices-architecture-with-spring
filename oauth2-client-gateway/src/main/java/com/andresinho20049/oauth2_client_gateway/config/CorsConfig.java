@@ -14,8 +14,8 @@ import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 @Configuration(proxyBeanMethods = false)
 public class CorsConfig {
 
-	@Value("${app.frontend.base-uri}")
-	private String appBaseUri;
+	@Value("${WEB_HOST:http://localhost:3000}")
+	private String webHost;
 
 	@Bean
 	CorsConfigurationSource corsConfigurationSource() {
@@ -23,7 +23,7 @@ public class CorsConfig {
 		config.addAllowedHeader("X-XSRF-TOKEN");
 		config.addAllowedHeader(HttpHeaders.CONTENT_TYPE);
 		config.setAllowedMethods(Arrays.asList("GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS"));
-		config.setAllowedOrigins(Collections.singletonList(this.appBaseUri));
+		config.setAllowedOrigins(Collections.singletonList(webHost));
 		config.setAllowCredentials(true);
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", config);
