@@ -1,4 +1,3 @@
 export const getRandomValue = (maxSize: number) => {
-    let i = Math.floor(Math.random() * maxSize);
-    return i;
+    return Math.floor(Math.random() * maxSize);
 };

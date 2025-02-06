@@ -41,6 +41,7 @@ export const TagCloud = ({ tags }: TagCloudProps) => {
         <ul className="list-none flex justify-center flex-wrap max-w-xl align-center gap-4 leading-8">
             {tags.map((t) => (
                 <TagCloudItem
+                    key={typeof t === "string" ? t : t.label}
                     tag={t}
                     color={textColors[getRandomValue(textColorsLength)]}
                     size={textSizes[getRandomValue(textSizesLength)]}
