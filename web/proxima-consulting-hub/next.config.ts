@@ -1,5 +1,5 @@
 import type { NextConfig } from "next";
-import { gatewayInternalHost } from "./src/utils/gateway";
+import { gatewayHost } from "./src/utils/gateway";
 
 const nextConfig: NextConfig = {
     output: "standalone",
@@ -10,11 +10,11 @@ const nextConfig: NextConfig = {
             fallback: [
                 {
                     source: "/callback",
-                    destination: `${gatewayInternalHost}/login/oauth2/code/bff-client`,
+                    destination: `${gatewayHost}/login/oauth2/code/bff-client`,
                 },
                 {
                     source: "/login",
-                    destination: `${gatewayInternalHost}/oauth2/authorization/bff-client`,
+                    destination: `${gatewayHost}/oauth2/authorization/bff-client`,
                 },
             ],
         };

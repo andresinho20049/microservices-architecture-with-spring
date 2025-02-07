@@ -26,7 +26,7 @@ spring:
             client-name: bff-client
         provider:
           spring:
-            issuer-uri: ${AUTHORIZATION_INTERNAL_HOST:http://authorization-server:9000}
+            issuer-uri: ${AUTHORIZATION_HOST:http://localhost:9000}
   cloud:
     gateway:
       routes:

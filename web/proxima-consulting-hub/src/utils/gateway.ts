@@ -1,5 +1,4 @@
 export const gatewayHost = process.env.GATEWAY_HOST || "http://localhost:8000";
-export const gatewayInternalHost = process.env.GATEWAY_INTERNAL_HOST || "http://oauth2-client-gateway:8000";
 
 type inputGatewayType = string | URL;
 
