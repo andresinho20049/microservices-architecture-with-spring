@@ -4,9 +4,10 @@ services:
   authorization-server:
     build: ./authorization-server
     network_mode: host
-    restart: always
+    restart: unless-stopped
+    pull_policy: always
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:9000/actuator/health || exit 1"]
+      test: ["CMD-SHELL", "curl --fail --silent localhost:9000/actuator/health | grep UP || exit 1"]
       interval: 10s
       retries: 5
       start_period: 30s
@@ -18,11 +19,22 @@ services:
       RESOURCE_SECRET_ID: ${RESOURCE_SECRET_ID}
       BFF_CLIENT_ID: ${BFF_CLIENT_ID}
       BFF_SECRET_ID: ${BFF_SECRET_ID}
+      AUTH_DB_HOST: ${AUTH_DB_HOST}
+      AUTH_DB_PORT: ${AUTH_DB_PORT}
+      AUTH_DB_NAME: ${AUTH_DB_NAME}
+      AUTH_DB_USER: ${AUTH_DB_USER}
+      AUTH_DB_PASSWORD: ${AUTH_DB_PASSWORD}
+      ADMIN_USERNAME: ${ADMIN_USERNAME}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+    depends_on:
+      postgresql_auth:
+        condition: service_healthy
   
   oauth2-client-gateway:
     build: ./oauth2-client-gateway
     network_mode: host
     restart: always
+    pull_policy: always
     environment:
       WEB_HOST: ${WEB_HOST}
       GATEWAY_HOST: ${GATEWAY_HOST}
@@ -32,27 +44,52 @@ services:
       BFF_CLIENT_ID: ${BFF_CLIENT_ID}
       BFF_SECRET_ID: ${BFF_SECRET_ID}
     depends_on:
-      - authorization-server
-
-  # postgresql:
-  #   image: postgres:15.10-alpine3.20
-  #   restart: always
-  #   environment:
-  #     POSTGRES_DB: ${POSTGRES_DB}
-  #     POSTGRES_USER: ${POSTGRES_USER}
-  #     POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-  #     POSTGRES_ROOT_PASSWORD: ${POSTGRES_ROOT_PASSWORD}
-  #   ports:
-  #     - ${POSTGRES_PORT}:5432
-  #   volumes:
-  #     - pg-data:/var/lib/postgresql/data
-  #     - ./database/:/docker-entrypoint-initdb.d/
+      authorization-server:
+        condition: service_healthy
 
   web-consulting-hub:
     build: ./web/proxima-consulting-hub
     network_mode: host
     environment:
       GATEWAY_HOST: ${GATEWAY_HOST}
+    depends_on:
+      oauth2-client-gateway:
+        condition: service_started
+
+  # postgresql:
+  #   image: postgres:15.10-alpine3.20
+  #   network_mode: host
+  #   restart: always
+  #   hostname: ${DATABASE_HOST}
+  #   environment:
+  #     POSTGRES_DB: ${DATABASE_NAME}
+  #     PGPORT: ${DATABASE_PORT}
+  #     POSTGRES_USER: ${DATABASE_USER}
+  #     POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+  #     POSTGRES_ROOT_PASSWORD: ${DATABASE_ROOT_PASSWORD}
+  #   volumes:
+  #     - vl-postgres-data:/var/lib/postgresql/data
+  #     - ./database/:/docker-entrypoint-initdb.d/
+
+  postgresql_auth:
+    image: postgres:15.10-alpine3.20
+    network_mode: host
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
+    hostname: ${AUTH_DB_HOST}
+    environment:
+      POSTGRES_DB: ${AUTH_DB_NAME}
+      PGPORT: ${AUTH_DB_PORT}
+      POSTGRES_USER: ${AUTH_DB_USER}
+      POSTGRES_PASSWORD: ${AUTH_DB_PASSWORD}
+      POSTGRES_ROOT_PASSWORD: ${AUTH_DB_ROOT_PASSWORD}
+    volumes:
+      - vl-postgres-authdata:/var/lib/postgresql/data
 
 networks:
   default:
@@ -60,3 +97,4 @@ networks:
 
 volumes:
   vl-postgres-data:
+  vl-postgres-authdata:

@@ -8,6 +8,7 @@ COPY pom.xml ./
 RUN mvn dependency:go-offline
 
 COPY ./src ./src
+
 RUN mvn clean
 RUN mvn install package
 
@@ -32,6 +33,9 @@ RUN cp /etc/skel/.cshrc /etc/skel/.profile
 # dumb-init occupies PID 1 and takes care of all the responsibilities.
 RUN apk add dumb-init
 
+# Install curl to healthcheck
+RUN apk add --no-cache curl
+
 # Define Workdir
 WORKDIR /opt/app
 
@@ -46,15 +50,15 @@ COPY --from=builder /opt/app/target/authorization-server-*.jar ./authorization-s
 
 RUN chmod 0 /home \
     && chmod 0 /var \
-    && chmod 0 /usr \
     && chmod 0 /dev \
     && chmod 0 /mnt \
     && chmod go-rw /etc \
     && chmod 0 /etc/ssl \
     && chmod 0 /etc/skel \
+    && chmod +x /usr/bin/curl \
     && chmod a+rwx /usr/bin/dumb-init
 
-RUN chown -R javauser:javagroup /opt/app
+RUN chown -R javauser:javagroup /opt/app 
 USER javauser
 
 ENTRYPOINT ["dumb-init", "java", "-jar", "authorization-server.jar"]
