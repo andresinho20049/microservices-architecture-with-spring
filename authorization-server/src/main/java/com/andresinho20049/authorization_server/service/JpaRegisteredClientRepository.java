@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Logger;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.jackson2.SecurityJackson2Modules;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
@@ -20,8 +18,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
-import com.andresinho20049.authorization_server.model.Client;
-import com.andresinho20049.authorization_server.repository.ClientRepository;
+import com.andresinho20049.authorization_server.model.client.Client;
+import com.andresinho20049.authorization_server.repository.client.ClientRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -30,9 +28,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Component
 public class JpaRegisteredClientRepository implements RegisteredClientRepository {
 
-	private final static Logger LOGGER = Logger.getLogger(JpaRegisteredClientRepository.class.getName());
-
-	@Autowired
 	@Qualifier("client-repository")
 	private final ClientRepository clientRepository;
 	private final ObjectMapper objectMapper = new ObjectMapper();
@@ -95,7 +90,6 @@ public class JpaRegisteredClientRepository implements RegisteredClientRepository
 
 		Map<String, Object> clientSettingsMap = parseMap(client.getClientSettings());
 		builder.clientSettings(ClientSettings.withSettings(clientSettingsMap).build());
-		builder.clientSettings(ClientSettings.builder().requireAuthorizationConsent(false).build());
 
 		Map<String, Object> tokenSettingsMap = parseMap(client.getTokenSettings());
 		builder.tokenSettings(TokenSettings.withSettings(tokenSettingsMap).build());
@@ -133,8 +127,6 @@ public class JpaRegisteredClientRepository implements RegisteredClientRepository
 	private Map<String, Object> parseMap(String data) {
 		try {
 			if(data == null || data.isEmpty()) return null;
-
-			LOGGER.info("Parsing data: " + data);
 			return this.objectMapper.readValue(data, new TypeReference<Map<String, Object>>() {
 			});
 		} catch (Exception ex) {

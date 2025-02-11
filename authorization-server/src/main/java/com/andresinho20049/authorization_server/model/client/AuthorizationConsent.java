@@ -1,4 +1,4 @@
-package com.andresinho20049.authorization_server.model;
+package com.andresinho20049.authorization_server.model.client;
 
 import java.io.Serializable;
 import java.util.Objects;

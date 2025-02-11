@@ -6,22 +6,18 @@ import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
-import java.util.Collection;
-import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -29,13 +25,12 @@ import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
 import org.springframework.security.oauth2.server.authorization.settings.AuthorizationServerSettings;
-import org.springframework.security.oauth2.server.authorization.token.JwtEncodingContext;
-import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenCustomizer;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.util.matcher.MediaTypeRequestMatcher;
 
+import com.andresinho20049.authorization_server.repository.user.UserRepository;
+import com.andresinho20049.authorization_server.userdetails.UserDetailsServiceCustom;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
@@ -46,6 +41,12 @@ import com.nimbusds.jose.proc.SecurityContext;
 @EnableReactiveMethodSecurity
 public class SecurityConfig {
 
+	private UserRepository userRepository;
+	
+	public SecurityConfig(UserRepository userRepository) {
+		this.userRepository = userRepository;
+	}
+	
 	@SuppressWarnings("removal")
 	@Bean
 	@Order(1)
@@ -57,7 +58,7 @@ public class SecurityConfig {
 				.defaultAuthenticationEntryPointFor(
 						new LoginUrlAuthenticationEntryPoint("/login"), 
 						new MediaTypeRequestMatcher(MediaType.TEXT_HTML)))
-				.oauth2ResourceServer((resourceServer) -> resourceServer.jwt(withDefaults()));
+			.oauth2ResourceServer((resourceServer) -> resourceServer.jwt(withDefaults()));
 
 		return http.build();
 	}
@@ -78,29 +79,27 @@ public class SecurityConfig {
 	
 	@Bean
 	PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder(10);
+		return new BCryptPasswordEncoder();
 	}
 
 	@Bean
 	UserDetailsService userDetailsService() {
-		UserDetails user = User
-				.withUsername("user")
-				.password("password")
-				.passwordEncoder(password -> passwordEncoder().encode(password))
-				.roles("USER")
-				.build();
-		
-		UserDetails admin = User
-				.withUsername("admin")
-				.password("password")
-				.passwordEncoder(password -> passwordEncoder().encode(password))
-				.roles("ADMIN")
-				.build();
-		
-
-		return new InMemoryUserDetailsManager(List.of(user, admin));
+		return new UserDetailsServiceCustom(userRepository);
 	}
 
+	 @Bean
+	 DaoAuthenticationProvider daoAuthenticationProvider() {
+	 	DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+	 	provider.setUserDetailsService(userDetailsService());
+	 	provider.setPasswordEncoder(passwordEncoder());
+	 	return provider;
+	 }
+
+	 @Bean
+	 AuthenticationManager authenticationManager() {
+	 	return new ProviderManager(daoAuthenticationProvider());
+	 }
+	 
 	@Bean
 	JWKSource<SecurityContext> jwkSource() {
 		KeyPair keyPair = generateRsaKey();
@@ -133,17 +132,6 @@ public class SecurityConfig {
 		return OAuth2AuthorizationServerConfiguration.jwtDecoder(jwkSource);
 	}
 	
-	@Bean
-	OAuth2TokenCustomizer<JwtEncodingContext> jwtCustomizer() {
-	    return context -> {
-			Collection<GrantedAuthority> authorities = context.getPrincipal().getAuthorities().stream()
-					.map(a -> new SimpleGrantedAuthority(a.getAuthority()))
-					.collect(Collectors.toList());
-
-			context.getClaims().claim("roles", authorities);
-	    };
-	}
-
 	@Bean
 	AuthorizationServerSettings authorizationServerSettings() {
 		return AuthorizationServerSettings.builder().build();

@@ -1,4 +1,4 @@
-package com.andresinho20049.authorization_server.repository;
+package com.andresinho20049.authorization_server.repository.client;
 
 import java.util.Optional;
 
@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.andresinho20049.authorization_server.model.Authorization;
+import com.andresinho20049.authorization_server.model.client.Authorization;
 
 @Repository
 public interface AuthorizationRepository extends JpaRepository<Authorization, String> {

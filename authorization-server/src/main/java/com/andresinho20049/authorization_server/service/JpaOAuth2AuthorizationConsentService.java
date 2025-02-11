@@ -14,8 +14,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
-import com.andresinho20049.authorization_server.model.AuthorizationConsent;
-import com.andresinho20049.authorization_server.repository.AuthorizationConsentRepository;
+import com.andresinho20049.authorization_server.model.client.AuthorizationConsent;
+import com.andresinho20049.authorization_server.repository.client.AuthorizationConsentRepository;
 
 @Component
 public class JpaOAuth2AuthorizationConsentService implements OAuth2AuthorizationConsentService {

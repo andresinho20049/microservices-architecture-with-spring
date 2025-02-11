@@ -28,14 +28,17 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
-import com.andresinho20049.authorization_server.model.Authorization;
-import com.andresinho20049.authorization_server.repository.AuthorizationRepository;
+import com.andresinho20049.authorization_server.model.client.Authorization;
+import com.andresinho20049.authorization_server.repository.client.AuthorizationRepository;
+import com.andresinho20049.authorization_server.userdetails.UserDetailsCustom;
+import com.andresinho20049.authorization_server.userdetails.UserDetailsCustomMixin;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Component
 public class JpaOAuth2AuthorizationService implements OAuth2AuthorizationService {
+
 	private final AuthorizationRepository authorizationRepository;
 	private final RegisteredClientRepository registeredClientRepository;
 	private final ObjectMapper objectMapper = new ObjectMapper();
@@ -50,6 +53,7 @@ public class JpaOAuth2AuthorizationService implements OAuth2AuthorizationService
 		List<Module> securityModules = SecurityJackson2Modules.getModules(classLoader);
 		this.objectMapper.registerModules(securityModules);
 		this.objectMapper.registerModule(new OAuth2AuthorizationServerJackson2Module());
+		this.objectMapper.addMixIn(UserDetailsCustom.class, UserDetailsCustomMixin.class);
 	}
 
 	@Override
@@ -106,7 +110,7 @@ public class JpaOAuth2AuthorizationService implements OAuth2AuthorizationService
 		}
 
 		OAuth2Authorization.Builder builder = OAuth2Authorization.withRegisteredClient(registeredClient)
-				.id(String.valueOf(entity.getId()))
+				.id(entity.getId())
 				.principalName(entity.getPrincipalName())
 				.authorizationGrantType(resolveAuthorizationGrantType(entity.getAuthorizationGrantType()))
 				.authorizedScopes(StringUtils.commaDelimitedListToSet(entity.getAuthorizedScopes()))

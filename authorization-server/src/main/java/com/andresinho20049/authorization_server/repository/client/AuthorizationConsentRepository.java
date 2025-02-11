@@ -1,11 +1,11 @@
-package com.andresinho20049.authorization_server.repository;
+package com.andresinho20049.authorization_server.repository.client;
 
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.andresinho20049.authorization_server.model.AuthorizationConsent;
+import com.andresinho20049.authorization_server.model.client.AuthorizationConsent;
 
 @Repository
 public interface AuthorizationConsentRepository extends JpaRepository<AuthorizationConsent, AuthorizationConsent.AuthorizationConsentId> {
