@@ -8,7 +8,7 @@ services:
     pull_policy: always
     healthcheck:
       test: ["CMD-SHELL", "curl --fail --silent localhost:9000/actuator/health | grep UP || exit 1"]
-      interval: 10s
+      interval: 45s
       retries: 5
       start_period: 30s
       timeout: 10s
@@ -64,6 +64,7 @@ services:
   #   environment:
   #     POSTGRES_DB: ${DATABASE_NAME}
   #     PGPORT: ${DATABASE_PORT}
+
   #     POSTGRES_USER: ${DATABASE_USER}
   #     POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
   #     POSTGRES_ROOT_PASSWORD: ${DATABASE_ROOT_PASSWORD}
