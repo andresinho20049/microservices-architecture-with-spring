@@ -17,6 +17,7 @@ import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -72,10 +73,19 @@ public class SecurityConfig {
 			.authorizeHttpRequests((authorize) -> authorize
 				.requestMatchers("/actuator/health", "/favicon.ico", "/error").permitAll()
 				.anyRequest().authenticated())
-			.formLogin(withDefaults());
+			.formLogin(formLogin -> formLogin
+					.loginPage("/login")
+					.permitAll());
 
 		return http.build();
 	}
+	
+	@Bean
+    WebSecurityCustomizer webSecurityCustomizer() {
+        return (web) -> web.debug(false)
+                .ignoring()
+                .requestMatchers("/webjars/**", "/images/**", "/css/**", "/assets/**", "/favicon.ico");
+    }
 	
 	@Bean
 	PasswordEncoder passwordEncoder() {
