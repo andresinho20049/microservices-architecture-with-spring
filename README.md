@@ -76,7 +76,7 @@ Uses the BFF (Backend For Frontend) flow to authenticate users and access resour
 - NodeJs: 23.7.0
     - NextJs: 15.1
     - React: 19
-- Postgres: 15.10
+- Postgres: 17
 - Docker: 27.5.1
 
 ## :rocket: Getting Started:

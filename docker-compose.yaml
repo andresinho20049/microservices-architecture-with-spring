@@ -56,24 +56,23 @@ services:
       oauth2-client-gateway:
         condition: service_started
 
-  # postgresql:
-  #   image: postgres:15.10-alpine3.20
-  #   network_mode: host
-  #   restart: always
-  #   hostname: ${DATABASE_HOST}
-  #   environment:
-  #     POSTGRES_DB: ${DATABASE_NAME}
-  #     PGPORT: ${DATABASE_PORT}
-
-  #     POSTGRES_USER: ${DATABASE_USER}
-  #     POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
-  #     POSTGRES_ROOT_PASSWORD: ${DATABASE_ROOT_PASSWORD}
-  #   volumes:
-  #     - vl-postgres-data:/var/lib/postgresql/data
-  #     - ./database/:/docker-entrypoint-initdb.d/
+  postgresql:
+    image: postgres:17-alpine3.19
+    network_mode: host
+    restart: always
+    hostname: ${DATABASE_HOST}
+    environment:
+      POSTGRES_DB: ${DATABASE_NAME}
+      PGPORT: ${DATABASE_PORT}
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_ROOT_PASSWORD: ${DATABASE_ROOT_PASSWORD}
+    volumes:
+      - ./resource/database/:/docker-entrypoint-initdb.d/postgres:17-alpine3.19
+      # - vl-postgres-data:/var/lib/postgresql/data
 
   postgresql_auth:
-    image: postgres:15.10-alpine3.20
+    image: postgres:17-alpine3.19
     network_mode: host
     restart: always
     healthcheck:
