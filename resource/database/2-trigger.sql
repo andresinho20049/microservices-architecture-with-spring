@@ -49,7 +49,7 @@ BEGIN
         (SELECT 
             count(t.id)
         FROM timesheet t 
-        WHERE t.project_id = 1 AND (
+        WHERE t.project_id = NEW.id AND (
             t.period_start < NEW.project_start OR
             t.period_end > NEW.project_end)) = 0
     ) THEN
