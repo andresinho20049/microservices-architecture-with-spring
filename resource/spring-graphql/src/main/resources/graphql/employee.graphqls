@@ -1,0 +1,38 @@
+type Position {
+  id: ID!
+  created_at: TIMESTAMP!
+  updated_at: TIMESTAMP!
+  updated_username: String!
+  name: String!
+  company: Company!
+  employees: [Employee!]!
+}
+
+type Employee {
+  id: ID!
+  created_at: TIMESTAMP!
+  updated_at: TIMESTAMP!
+  updated_username: String!
+  name: String!
+  birth_date: Date!
+  position: Position!
+  hire_date: Date!
+  termination_date: Date
+  note: String
+  company: Company!
+  paychecks: [Paycheck!]!
+  timesheets: [Timesheet!]!
+}
+
+type Paycheck {
+  id: ID!
+  created_at: TIMESTAMP!
+  updated_at: TIMESTAMP!
+  updated_username: String!
+  employee: Employee!
+  pay_date: Date!
+  gross_earn: Float!
+  deduction: Float!
+  net_pay: Float!
+  company: Company!
+}
