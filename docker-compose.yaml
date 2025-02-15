@@ -68,7 +68,7 @@ services:
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
       POSTGRES_ROOT_PASSWORD: ${DATABASE_ROOT_PASSWORD}
     volumes:
-      - ./resource/database/:/docker-entrypoint-initdb.d/postgres:17-alpine3.19
+      - ./resource/database/:/docker-entrypoint-initdb.d/
       # - vl-postgres-data:/var/lib/postgresql/data
 
   postgresql_auth:

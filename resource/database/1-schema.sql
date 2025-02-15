@@ -54,8 +54,8 @@ CREATE TABLE IF NOT EXISTS employee (
   company_id BIGINT NOT NULL,
   CONSTRAINT employee_pk PRIMARY KEY (id),
   CONSTRAINT employee_not_short_name_ck CHECK (length(name)>5),
-  CONSTRAINT employee_birth_hire_ck CHECK (hire_date >= birth_date),
-  CONSTRAINT employee_termination_hire_ck CHECK ((termination_date IS NULL) OR (termination_date >= hire_date)),
+  CONSTRAINT employee_birth_hire_ck CHECK (hire_date > birth_date),
+  CONSTRAINT employee_termination_hire_ck CHECK ((termination_date IS NULL) OR (termination_date > hire_date)),
   CONSTRAINT employee_position_fk FOREIGN KEY (position_id) REFERENCES position(id),
   CONSTRAINT employee_company_fk FOREIGN KEY (company_id) REFERENCES company(id)
 );
