@@ -1,8 +1,8 @@
 type Position {
   id: ID!
-  created_at: TIMESTAMP!
-  updated_at: TIMESTAMP!
-  updated_username: String!
+  createdAt: String!
+  updatedAt: String!
+  updatedUsername: String!
   name: String!
   company: Company!
   employees: [Employee!]!
@@ -10,14 +10,14 @@ type Position {
 
 type Employee {
   id: ID!
-  created_at: TIMESTAMP!
-  updated_at: TIMESTAMP!
-  updated_username: String!
+  createdAt: String!
+  updatedAt: String!
+  updatedUsername: String!
   name: String!
-  birth_date: Date!
+  birthDate: String
   position: Position!
-  hire_date: Date!
-  termination_date: Date
+  hireDate: String!
+  terminationDate: String
   note: String
   company: Company!
   paychecks: [Paycheck!]!
@@ -26,13 +26,13 @@ type Employee {
 
 type Paycheck {
   id: ID!
-  created_at: TIMESTAMP!
-  updated_at: TIMESTAMP!
-  updated_username: String!
+  createdAt: String!
+  updatedAt: String!
+  updatedUsername: String!
   employee: Employee!
-  pay_date: Date!
-  gross_earn: Float!
+  payDate: String!
+  grossEarn: Float!
   deduction: Float!
-  net_pay: Float!
+  netPay: Float!
   company: Company!
 }

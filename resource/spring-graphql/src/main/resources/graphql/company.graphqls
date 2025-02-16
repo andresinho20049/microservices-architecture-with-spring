@@ -1,11 +1,13 @@
 type Company {
   id: ID!
-  created_at: TIMESTAMP!
-  updated_at: TIMESTAMP!
-  updated_username: String!
+  createdAt: String!
+  updatedAt: String!
+  updatedUsername: String!
   name: String!
-  short_name: String!
-  tax_id: String!
+  shortName: String!
+  taxId: String!
   description: String
   positions: [Position!]!
+  employees: [Employee!]!
+  projects: [Project!]!
 }

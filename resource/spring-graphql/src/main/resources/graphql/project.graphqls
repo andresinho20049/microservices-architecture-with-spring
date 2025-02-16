@@ -1,12 +1,12 @@
 type Project {
   id: ID!
-  created_at: TIMESTAMP!
-  updated_at: TIMESTAMP!
-  updated_username: String!
+  createdAt: String!
+  updatedAt: String!
+  updatedUsername: String!
   name: String
   description: String
-  project_start: Date!
-  project_end: Date
+  projectStart: String!
+  projectEnd: String
   company: Company!
   timesheets: [Timesheet!]!
 }

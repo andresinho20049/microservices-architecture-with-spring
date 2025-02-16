@@ -1,11 +1,11 @@
 type Timesheet {
   id: ID!
-  created_at: TIMESTAMP!
-  updated_at: TIMESTAMP!
-  updated_username: String!
+  createdAt: String!
+  updatedAt: String!
+  updatedUsername: String!
   employee: Employee!
   project: Project!
-  period_start: TIMESTAMP!
-  period_end: TIMESTAMP!
+  periodStart: String!
+  periodEnd: String!
   company: Company!
 }

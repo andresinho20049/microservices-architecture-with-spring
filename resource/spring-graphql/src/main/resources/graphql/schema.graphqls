@@ -1,0 +1,40 @@
+schema {
+  query: Query
+  # mutation: Mutation
+}
+
+type Query {
+  companyById(id: ID!): Company
+  employeeByCompanyId(companyId: ID!): [Employee]
+  projectByCompanyId(companyId: ID!): [Project]
+  positionByCompanyId(companyId: ID!): [Position]
+  paycheckByCompanyId(companyId: ID!): [Paycheck]
+  timesheetByCompanyId(companyId: ID!): [Timesheet]
+}
+
+
+
+# type Query {
+#   employees(result: [Employee!]! @stream)
+#   employee(id: ID! @find(type: "Employee"))
+# }
+
+# type Mutation {
+#   createEmployee(employee: EmployeeInput! @create(type: "Employee"))
+#   updateEmployee(employee: EmployeeInput! @update(type: "Employee"))
+#   deleteEmployee(id: ID! @delete(type: "Employee"))
+# }
+
+# input EmployeeInput {
+#   id: ID!
+#   created_at: TIMESTAMP!
+#   updated_at: TIMESTAMP!
+#   updated_username: String!
+#   name: String!
+#   birth_date: Date!
+#   position: Position!
+#   hire_date: Date!
+#   termination_date: Date
+#   note: String
+#   company: Company!
+# }
