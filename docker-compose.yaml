@@ -1,5 +1,8 @@
 name: microservices-spring
 
+include:
+  - ./resource/docker-compose.yaml
+
 services:
   authorization-server:
     build: ./authorization-server
@@ -56,21 +59,6 @@ services:
       oauth2-client-gateway:
         condition: service_started
 
-  postgresql:
-    image: postgres:17-alpine3.19
-    network_mode: host
-    restart: always
-    hostname: ${DATABASE_HOST}
-    environment:
-      POSTGRES_DB: ${DATABASE_NAME}
-      PGPORT: ${DATABASE_PORT}
-      POSTGRES_USER: ${DATABASE_USER}
-      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
-      POSTGRES_ROOT_PASSWORD: ${DATABASE_ROOT_PASSWORD}
-    volumes:
-      - ./resource/database/:/docker-entrypoint-initdb.d/
-      # - vl-postgres-data:/var/lib/postgresql/data
-
   postgresql_auth:
     image: postgres:17-alpine3.19
     network_mode: host
@@ -96,5 +84,4 @@ networks:
     name: nt-microservices-spring
 
 volumes:
-  vl-postgres-data:
   vl-postgres-authdata:
