@@ -15,4 +15,6 @@ public interface TimesheetService {
 	
 	Flux<Timesheet> findByProjectId(Long projectId);
 	
+	Mono<Timesheet> saveTimesheet(Long id, Timesheet timesheet);
+	
 }

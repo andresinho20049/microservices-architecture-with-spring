@@ -3,14 +3,11 @@ package com.andresinho20049.spring_graphql.db.entity;
 import java.time.LocalDate;
 import java.util.Objects;
 
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @Table(name = "employee")
 public class Employee {
@@ -18,6 +15,7 @@ public class Employee {
     @Id
     private Long id;
 
+    @CreatedDate
     private LocalDate createdAt;
 
     @LastModifiedDate
@@ -28,9 +26,6 @@ public class Employee {
 
     private String name;
 
-    @Column("birth_date")
-	@JsonSerialize(as = LocalDate.class)
-	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
     private LocalDate birthDate;
 
     private Long positionId;

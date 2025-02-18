@@ -3,6 +3,7 @@ package com.andresinho20049.spring_graphql.db.entity;
 import java.time.LocalDate;
 import java.util.Objects;
 
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -14,6 +15,7 @@ public class Position {
     @Id
     private Long id;
 
+    @CreatedDate
     private LocalDate createdAt;
 
     @LastModifiedDate

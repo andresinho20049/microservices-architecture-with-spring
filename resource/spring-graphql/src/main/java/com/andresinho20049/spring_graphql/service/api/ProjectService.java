@@ -11,4 +11,6 @@ public interface ProjectService {
 	
 	Flux<Project> findByCompanyId(Long companyId);
 	
+	Mono<Project> saveProject(Long id, Project project);
+	
 }

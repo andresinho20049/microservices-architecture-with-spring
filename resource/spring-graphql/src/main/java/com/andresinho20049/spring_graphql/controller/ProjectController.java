@@ -1,6 +1,7 @@
 package com.andresinho20049.spring_graphql.controller;
 
 import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.graphql.data.method.annotation.SchemaMapping;
 import org.springframework.stereotype.Controller;
@@ -43,6 +44,16 @@ public class ProjectController {
 	@SchemaMapping
 	public Flux<Timesheet> timesheets(Project project) {
 		return timesheetService.findByProjectId(project.getId());
+	}
+	
+	@MutationMapping
+	public Mono<Project> createProject(@Argument Project project) {
+		return projectService.saveProject(null, project);
+	}
+	
+	@MutationMapping
+	public Mono<Project> updateProject(@Argument Long id, @Argument Project project) {
+		return projectService.saveProject(id, project);
 	}
 
 }

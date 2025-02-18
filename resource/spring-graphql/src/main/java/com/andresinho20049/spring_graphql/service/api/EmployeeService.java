@@ -13,4 +13,6 @@ public interface EmployeeService {
 	
 	Flux<Employee> findByPositionId(Long positionId);
 	
+	Mono<Employee> saveEmployee(Long id, Employee employee);
+	
 }

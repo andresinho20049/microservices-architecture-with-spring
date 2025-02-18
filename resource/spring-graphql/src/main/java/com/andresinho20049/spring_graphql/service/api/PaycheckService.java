@@ -13,4 +13,6 @@ public interface PaycheckService {
 	
 	Flux<Paycheck> findByEmployeeId(Long employeeId);
 	
+	Mono<Paycheck> savePaycheck(Long id, Paycheck paycheck);
+	
 }

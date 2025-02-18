@@ -11,4 +11,6 @@ public interface PositionService {
 	
 	Flux<Position> findByCompanyId(Long companyId);
 	
+	Mono<Position> savePosition(Long id, Position position);
+	
 }

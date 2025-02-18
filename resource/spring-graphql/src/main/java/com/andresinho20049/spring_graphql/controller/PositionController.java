@@ -1,6 +1,7 @@
 package com.andresinho20049.spring_graphql.controller;
 
 import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.graphql.data.method.annotation.SchemaMapping;
 import org.springframework.stereotype.Controller;
@@ -42,6 +43,16 @@ public class PositionController {
 	@SchemaMapping
 	public Flux<Employee> employees(Position position) {
 		return employeeService.findByPositionId(position.getId());
+	}
+	
+	@MutationMapping
+	public Mono<Position> createPosition(@Argument Position position) {
+		return positionService.savePosition(null, position);
+	}
+	
+	@MutationMapping
+	public Mono<Position> updatePosition(@Argument Long id, @Argument Position position) {
+		return positionService.savePosition(id, position);
 	}
 
 }
