@@ -1,6 +1,6 @@
 schema {
   query: Query
-  # mutation: Mutation
+  mutation: Mutation
 }
 
 type Query {
@@ -12,29 +12,17 @@ type Query {
   timesheetByCompanyId(companyId: ID!): [Timesheet]
 }
 
+type Mutation {
+  createEmployee(employee: EmployeeInput!): Employee
+  createPosition(position: PositionInput!): Position
+  createPaycheck(paycheck: PaycheckInput!): Paycheck
+  createProject(project: ProjectInput!): Project
+  createTimesheet(timesheet: TimesheetInput!): Timesheet
 
+  updateEmployee(id: ID!, employee: EmployeeInput!): Employee
+  updatePosition(id: ID!, position: PositionInput!): Position
+  updatePaycheck(id: ID!, paycheck: PaycheckInput!): Paycheck
+  updateProject(id: ID!, project: ProjectInput!): Project
+  updateTimesheet(id: ID!, timesheet: TimesheetInput!): Timesheet
+}
 
-# type Query {
-#   employees(result: [Employee!]! @stream)
-#   employee(id: ID! @find(type: "Employee"))
-# }
-
-# type Mutation {
-#   createEmployee(employee: EmployeeInput! @create(type: "Employee"))
-#   updateEmployee(employee: EmployeeInput! @update(type: "Employee"))
-#   deleteEmployee(id: ID! @delete(type: "Employee"))
-# }
-
-# input EmployeeInput {
-#   id: ID!
-#   created_at: TIMESTAMP!
-#   updated_at: TIMESTAMP!
-#   updated_username: String!
-#   name: String!
-#   birth_date: Date!
-#   position: Position!
-#   hire_date: Date!
-#   termination_date: Date
-#   note: String
-#   company: Company!
-# }

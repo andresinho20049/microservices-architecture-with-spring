@@ -10,3 +10,12 @@ type Project {
   company: Company!
   timesheets: [Timesheet!]!
 }
+
+# Mutation
+input ProjectInput {
+  companyId: Int!
+  name: String!
+  description: String
+  projectStart: String!
+  projectEnd: String
+}

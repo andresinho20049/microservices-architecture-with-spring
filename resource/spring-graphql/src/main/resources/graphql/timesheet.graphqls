@@ -9,3 +9,12 @@ type Timesheet {
   periodEnd: String!
   company: Company!
 }
+
+# Mutation
+input TimesheetInput {
+  companyId: Int!
+  employeeId: Int!
+  projectId: Int!
+  periodStart: String!
+  periodEnd: String
+}
