@@ -65,7 +65,7 @@ Uses the BFF (Backend For Frontend) flow to authenticate users and access resour
 - Java: 17
     - Maven: 3.9.9
     - Spring-Boot: 3.4.2
-        - spring-boot-starter-web: 3.4.2
+        - spring-boot-starter-webflux: 3.4.2
         - spring-boot-starter-oauth2-client: 3.4.2
         - spring-boot-starter-oauth2-resource-server: 3.4.2
         - spring-security-oauth2-authorization-server: 1.4.1
