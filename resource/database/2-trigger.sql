@@ -28,7 +28,7 @@ BEGIN
           SELECT 
             *
           FROM timesheet t 
-          WHERE t.project_id = NEW.project_id AND t.employee_id = NEW.employee_id AND (
+          WHERE t.id != NEW.id AND t.project_id = NEW.project_id AND t.employee_id = NEW.employee_id AND (
             (t.period_start BETWEEN NEW.period_start AND NEW.period_end) OR 
             (t.period_end BETWEEN NEW.period_start AND NEW.period_end)
           )
