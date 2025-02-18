@@ -11,7 +11,7 @@ spring:
                     issuer-uri: ${AUTHORIZATION_HOST:http://localhost:9000}
     graphql:
         graphiql:
-            enabled: true
+            enabled: false
     data:
         r2dbc:
             repositories:
@@ -19,4 +19,4 @@ spring:
     r2dbc:
         url: r2dbc:postgresql://${DATABASE_HOST:localhost}:${DATABASE_PORT:5433}/${DATABASE_NAME:postgres_db}
         username: ${DATABASE_USER:postgres}
-        password: ${DATABASE_PASSWORD:519bed98968c}
+        password: ${DATABASE_PASSWORD:postgres_pass}

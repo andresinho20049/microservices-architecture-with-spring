@@ -8,14 +8,6 @@ spring:
     oauth2:
       client:
         registration:
-          oidc-client:
-            client-id: ${RESOURCE_CLIENT_ID:resourceClient}
-            client-secret: ${RESOURCE_SECRET_ID:resourceSecret}
-            authorization-grant-type: authorization_code
-            redirect-uri: ${GATEWAY_HOST:http://localhost:8000}/login/oauth2/code/oidc-client
-            provider: spring
-            scope: openid,profile
-            client-name: oidc-client
           bff-client:
             client-id: ${BFF_CLIENT_ID:bffClient}
             client-secret: ${BFF_SECRET_ID:bffSecret}
@@ -30,18 +22,9 @@ spring:
   cloud:
     gateway:
       routes:
-#      - id: userinfo
-#        uri: http://localhost:9000
-#        predicates:
-#        - Path=/userinfo
-#        filters: 
-#        - TokenRelay=
       - id: resource
         uri: http://localhost:8001
         predicates:
-        - Path=/api/**
+        - Path=/graphql/**, /graphiql/**
         filters: 
-        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
         - TokenRelay=
-        - SaveSession
-        - StripPrefix=1
