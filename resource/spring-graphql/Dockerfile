@@ -28,14 +28,15 @@ set ignoreeof' >> /etc/skel/.cshrc
 
 RUN cp /etc/skel/.cshrc /etc/skel/.profile
 
+# Define Workdir
+WORKDIR /opt/app
+
 # dumb-init occupies PID 1 and takes care of all the responsibilities.
 RUN apk add dumb-init
 
 # Install curl to healthcheck
-RUN apk add --no-cache curl
-
-# Define Workdir
-WORKDIR /opt/app
+RUN apk add --no-cache curl jq
+COPY healthcheck.sh healthcheck.sh
 
 # Add user javauser based minumum privileges
 RUN addgroup -S -g 1000 javagroup && \

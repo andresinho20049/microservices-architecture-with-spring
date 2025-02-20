@@ -26,7 +26,7 @@ public class DatabaseLoader {
     @Value("${ADMIN_USERNAME:admin}")
     private String adminUsername;
 
-    @Value("${ADMIN_PASSWORD:admin}")
+    @Value("${ADMIN_PASSWORD:password}")
     private String adminPassword;
 
     @Value("${RESOURCE_CLIENT_ID:resourceClient}")

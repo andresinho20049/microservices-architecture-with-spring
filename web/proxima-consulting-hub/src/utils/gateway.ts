@@ -1,4 +1,4 @@
-export const gatewayHost = process.env.GATEWAY_HOST || "http://localhost:8000";
+export const gatewayHost = process.env.GATEWAY_HOST || "http://localhost:8080";
 
 type inputGatewayType = string | URL;
 

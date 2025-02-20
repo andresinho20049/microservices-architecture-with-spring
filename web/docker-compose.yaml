@@ -1,0 +1,9 @@
+services:
+  web-hub:
+    build: ./proxima-consulting-hub
+    network_mode: host
+    environment:
+      GATEWAY_HOST: ${GATEWAY_URI}
+    depends_on:
+      oauth2-client-gateway:
+        condition: service_started

@@ -27,7 +27,7 @@ export const fetchGraphql = async ({
         redirect: 'follow'
     };
 
-    const data = await fetchGateway('/graphql', requestOptions)
+    const data = await fetchGateway('/spring-graphql/graphql', requestOptions)
     return await data.text();
 
 }
