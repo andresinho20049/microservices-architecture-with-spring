@@ -1,5 +1,5 @@
 server:
-    port: 8001
+    port: ${GRAPHQL_PORT:8081}
 
 spring:
     application:
@@ -11,7 +11,7 @@ spring:
                     issuer-uri: ${AUTHORIZATION_HOST:http://localhost:9000}
     graphql:
         graphiql:
-            enabled: false
+            enabled: true
     data:
         r2dbc:
             repositories:
@@ -20,3 +20,10 @@ spring:
         url: r2dbc:postgresql://${DATABASE_HOST:localhost}:${DATABASE_PORT:5433}/${DATABASE_NAME:postgres_db}
         username: ${DATABASE_USER:postgres}
         password: ${DATABASE_PASSWORD:postgres_pass}
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_PROTOCOL:http}://${EUREKA_USER:eureka}:${EUREKA_PASS:eureka_pass}@${EUREKA_HOST:localhost}:${EUREKA_PORT:8761}/eureka
+      fetch-registry: true
+      register-with-eureka: true
