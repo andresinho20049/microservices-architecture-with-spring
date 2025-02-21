@@ -24,6 +24,8 @@ spring:
                         issuer-uri: ${AUTH_URI:http://localhost:9000}
 
 eureka:
+    instance:
+        hostname: ${EUREKA_HOST:localhost}
     client:
         register-with-eureka: false
         fetch-registry: false
