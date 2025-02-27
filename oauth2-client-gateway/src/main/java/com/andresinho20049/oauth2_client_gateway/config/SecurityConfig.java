@@ -1,6 +1,7 @@
 package com.andresinho20049.oauth2_client_gateway.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.Arrays;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
@@ -18,8 +19,11 @@ import org.springframework.security.web.server.authentication.logout.WebSessionS
 @EnableWebFluxSecurity
 public class SecurityConfig {
 	
-	@Autowired
 	private ReactiveClientRegistrationRepository clientRegistrationRepository;
+
+	public SecurityConfig(ReactiveClientRegistrationRepository clientRegistrationRepository) {
+		this.clientRegistrationRepository = clientRegistrationRepository;
+	}
 	
 	@Bean
 	SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
