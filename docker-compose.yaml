@@ -2,7 +2,7 @@ name: microservices-spring
 
 include:
   - ./resource/docker-compose.yaml
-  - ./web/docker-compose.yaml
+  - ./ui/docker-compose.yaml
 
 services:
   authorization-server:
