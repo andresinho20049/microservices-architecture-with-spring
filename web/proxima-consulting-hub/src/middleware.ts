@@ -5,18 +5,13 @@ export const config = {
 };
 
 const middleware = (request: NextRequest) => {
-    if (!request.cookies.has("JSESSIONID")) return redirectError(request);
+    if (!request.cookies.has("SESSION_BFF")) return redirectError(request);
 
     return NextResponse.next();
 };
 
 const redirectError = (request: NextRequest) => {
-    request.cookies.delete("token");
-
-    const response = NextResponse.redirect(new URL("/", request.url));
-    response.cookies.delete("token");
-
-    return response;
+    return NextResponse.redirect(new URL("/", request.url));;
 };
 
 export default middleware;

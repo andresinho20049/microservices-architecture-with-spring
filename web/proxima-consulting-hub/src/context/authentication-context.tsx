@@ -40,6 +40,7 @@ export const AuthenticationContextProvider = ({
     const logout = useCallback(() => {
         fetchGateway("/logout", { method: "POST" }).then(() => {
             setUserInfo(null);
+            location?.reload()
         });
     }, []);
 

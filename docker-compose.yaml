@@ -73,6 +73,7 @@ services:
       EUREKA_PASS: ${EUREKA_PASS}
       WEB_HOST: ${HUB_URI}
       AUTHORIZATION_HOST: ${AUTH_URI}
+      ALLOWS_CORS_ORIGIN: ${ALLOWS_CORS_ORIGIN}
     depends_on:
       spring-graphql:
         condition: service_healthy
