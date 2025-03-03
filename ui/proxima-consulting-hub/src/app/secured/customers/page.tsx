@@ -1,6 +1,6 @@
 'use client'
 
-import { fetchGraphql } from "@/hub/services/graphql";
+import { fetchGraphql } from "@/hub/services/graphql/graphql";
 import { useEffect, useState } from "react";
 
 

@@ -9,8 +9,8 @@ import {
     useMemo,
 } from "react";
 import usePersistedState from "@/hub/hooks/use-persisted-state";
-import { getUserInfoService, UserInfoType } from "@/hub/services/user-info";
-import { fetchGateway } from "../utils/gateway";
+import { getUserInfoService, UserInfoType } from "@/hub/services/user/user";
+import { fetchGateway } from "../services/base-api-gateway";
 import { redirect, RedirectType } from "next/navigation";
 
 type AuthenticationContextType = {

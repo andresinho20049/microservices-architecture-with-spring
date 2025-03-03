@@ -1,4 +1,4 @@
-import { fetchGateway } from "../utils/gateway";
+import { fetchGateway } from "../base-api-gateway";
 
 type UserInfoType = {
     sub: string;
@@ -20,7 +20,11 @@ type RoleType = {
 
 export type { UserInfoType, RoleType };
 
-export const getUserInfoService = async () => {
+export const getUserInfoService = async ():Promise<UserInfoType> => {
     const data = await fetchGateway("/userinfo");
     return await data.json();
 };
+
+export const logout = async () => {
+    return await fetchGateway("/logout", {method: "POST"});
+}

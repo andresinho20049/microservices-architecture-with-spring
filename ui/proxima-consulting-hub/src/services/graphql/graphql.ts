@@ -1,4 +1,4 @@
-import { fetchGateway } from "../utils/gateway";
+import { fetchGateway } from "../base-api-gateway";
 
 type fetchGraphqlType = {
     type: "query" | "mutation";
