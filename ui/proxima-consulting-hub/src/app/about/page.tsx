@@ -3,6 +3,11 @@ import {
     TagCloud,
     TagCloudType,
 } from "@/hub/components/server/section/tag-cloud";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "About"
+}
 
 export default function About() {
     const tags: TagCloudType[] = [

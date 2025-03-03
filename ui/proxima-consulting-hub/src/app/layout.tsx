@@ -17,7 +17,10 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-    title: "Proxima Consulting",
+    title: {
+        default: "Andresinho20049",
+        template: "%s | Andresinho20049"
+    },
     description: "Managing Success, One Project at a Time",
 };
 
