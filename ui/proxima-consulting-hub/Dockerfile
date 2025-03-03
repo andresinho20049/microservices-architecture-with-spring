@@ -1,10 +1,10 @@
 ## BASE ##
-FROM node:22.13-alpine as base
+FROM node:23.7-alpine as base
 
 RUN apk update
 RUN apk add --no-cache bash
 RUN apk add --update npm
-RUN npm install -g npm@10.9.2
+RUN npm install -g npm@11.1.0
 
 ARG WORK_DIR=/opt/app
 
