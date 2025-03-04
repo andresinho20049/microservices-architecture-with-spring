@@ -1,13 +1,28 @@
 "use client";
 
+import { useLogoutMutation } from "@/hub/store/features/auth/auth-api";
+import { useAppSelector } from "@/hub/store/hooks";
 import Image from "next/image";
-import { useAuthenticationContext } from "@/hub/context/authentication-context";
+import { redirect, RedirectType } from "next/navigation";
+import { useCallback, useEffect, useState } from "react";
 
 export const LoginComponent = () => {
-    const { isAuthenticated, login, logout } = useAuthenticationContext();
+    const { isAuthenticated } = useAppSelector(state => state.auth);
+    const [logout] = useLogoutMutation();
 
-    const linkText = isAuthenticated ? "Logout" : "Login";
-    const linkIcon = isAuthenticated ? "/icons/padlock.svg" : "/icons/key.svg";
+    const [textState, setTextState] = useState<string>("Login");
+    const [iconState, setIconState] = useState<string>("/icons/key.svg");
+
+    const login = useCallback(() => {
+        redirect('/login', RedirectType.replace);
+    }, []);
+
+    useEffect(() => {
+
+        setTextState(() => isAuthenticated ? "Logout" : "Login");
+        setIconState(() => isAuthenticated ? "/icons/padlock.svg" : "/icons/key.svg");
+
+    }, [isAuthenticated]);
 
     return (
         <button
@@ -15,8 +30,8 @@ export const LoginComponent = () => {
             type={"button"}
             onClick={isAuthenticated ? logout : login}
         >
-            {linkText}
-            <Image alt="Login Icon" src={linkIcon} width={14} height={14} />
+            {textState}
+            <Image alt="Login Icon" src={iconState} width={14} height={14} />
         </button>
     );
 };

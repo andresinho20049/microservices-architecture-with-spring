@@ -6,7 +6,9 @@ import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
+import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,6 +29,8 @@ import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
 import org.springframework.security.oauth2.server.authorization.settings.AuthorizationServerSettings;
+import org.springframework.security.oauth2.server.authorization.token.JwtEncodingContext;
+import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenCustomizer;
 import org.springframework.security.oauth2.server.resource.web.authentication.BearerTokenAuthenticationFilter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
@@ -142,6 +146,22 @@ public class SecurityConfig {
 	@Bean
 	JwtDecoder jwtDecoder(JWKSource<SecurityContext> jwkSource) {
 		return OAuth2AuthorizationServerConfiguration.jwtDecoder(jwkSource);
+	}
+	
+	@Bean
+	OAuth2TokenCustomizer<JwtEncodingContext> jwtTokenCustomizer() { 
+		return (context) -> {
+			context.getClaims().claims((claims) -> { 
+				userRepository.findByUsername(context.getPrincipal().getName()).ifPresent(user -> {
+					Set<String> roles = user.getRoles()
+							.stream()
+							.filter(r -> r != null)
+							.map(r -> r.getAuthority().replace("ROLE_", ""))
+							.collect(Collectors.toSet());
+					claims.put("roles", roles); 
+				});
+			});
+		};
 	}
 	
 	@Bean

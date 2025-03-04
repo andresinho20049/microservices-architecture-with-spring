@@ -14,8 +14,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserInfo {
 	
 	@GetMapping("/userinfo")
-	public Map<String, Object> getUserInfo(@AuthenticationPrincipal OidcUser oidcUser) {
-		return oidcUser.getAttributes();
+	public Map<String, Object> getUserInfo(@AuthenticationPrincipal OidcUser oidcUser, @RegisteredOAuth2AuthorizedClient OAuth2AuthorizedClient authorizedClient) {
+		Map<String, Object> userAttr = new HashMap<>();
+		userAttr.put("name", oidcUser.getName());
+		userAttr.put("username", authorizedClient.getPrincipalName());
+		userAttr.put("roles", oidcUser.getClaim("roles"));
+
+		return userAttr;
 	}
 	
 	@GetMapping("/admin/userinfo")

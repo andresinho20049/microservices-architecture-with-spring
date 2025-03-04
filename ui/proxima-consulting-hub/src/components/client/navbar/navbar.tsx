@@ -1,22 +1,21 @@
 "use client";
 
-import { useAuthenticationContext } from "@/hub/context/authentication-context";
-import { pages } from "@/hub/utils/pages";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useAppSelector } from "@/hub/store/hooks";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { LogoComponent } from "../../server/brand/logo";
 import { LoginComponent } from "../session/login-component";
 import { HamburgerButton } from "./hamburger";
 import { NavBarLink } from "./navbar-link";
 import { ThemeToggle } from "./theme-toggle";
+import { getPages } from "@/hub/utils/pages";
+import { AuthStateType } from "@/hub/store/features/auth/auth-types";
 
 export const NavBar = () => {
     const [open, setOpen] = useState(false);
     const navRef = useRef<HTMLDivElement>(null);
 
-    const { isAuthenticated } = useAuthenticationContext();
-    const showPages = isAuthenticated
-        ? pages
-        : pages.filter((p) => !p.requireLogged);
+    const authState:AuthStateType = useAppSelector(state => state.auth);
+    const showPages = useMemo(() => getPages(authState), [authState]);
 
     const handleClose = useCallback(() => {
         setOpen(false);
