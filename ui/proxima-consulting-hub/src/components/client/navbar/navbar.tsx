@@ -7,15 +7,16 @@ import { LoginComponent } from "../session/login-component";
 import { HamburgerButton } from "./hamburger";
 import { NavBarLink } from "./navbar-link";
 import { ThemeToggle } from "./theme-toggle";
-import { getPages } from "@/hub/utils/pages";
+import { usePage } from "@/hub/hooks/use-page";
 import { AuthStateType } from "@/hub/store/features/auth/auth-types";
 
 export const NavBar = () => {
     const [open, setOpen] = useState(false);
     const navRef = useRef<HTMLDivElement>(null);
+    const { getPagesAuthorized } = usePage();
 
     const authState:AuthStateType = useAppSelector(state => state.auth);
-    const showPages = useMemo(() => getPages(authState), [authState]);
+    const showPages = useMemo(() => getPagesAuthorized(authState), [authState]);
 
     const handleClose = useCallback(() => {
         setOpen(false);
@@ -58,18 +59,26 @@ export const NavBar = () => {
                 ))}
             </div>
 
-            <div className="flex gap-2">
-                <LoginComponent />
-                <div
-                    className={`${
-                        open
-                            ? "flex justify-center mt-5 py-4 gap-2 border-t-2 border-gray-500"
-                            : "hidden"
-                    } w-full md:flex md:w-auto`}
-                >
-                    <ThemeToggle />
-                </div>
-            </div>
+            <AdditionalActions open={open} />
         </nav>
     );
 };
+
+type AdditionalActionsType = {
+    open: boolean;
+}
+
+const AdditionalActions = ({
+    open
+}:AdditionalActionsType) => {
+    
+    return (
+        <div className={`
+            ${open ? "flex flex-col w-full items-center justify-center mt-5 py-4 border-t-2 border-gray-500": "hidden"}
+            md:flex md:w-auto gap-2
+        `}>
+            <LoginComponent />
+            <ThemeToggle />
+        </div>
+    )
+}

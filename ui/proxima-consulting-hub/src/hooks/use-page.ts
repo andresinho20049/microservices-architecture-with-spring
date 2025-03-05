@@ -15,8 +15,8 @@ const allPages: PageType[] = [
     {href: "/about", label: "About", requireAuthenticated: false}
 ]
 
-export const getPages = (authState: AuthStateType) => {
-    const pages = allPages.filter(p => {
+const getPagesAuthorized = (authState: AuthStateType) => {
+    const authorizedPages = allPages.filter(p => {
         if(!p.requireAuthenticated) return true;
 
         if(authState.isAuthenticated) {
@@ -30,5 +30,12 @@ export const getPages = (authState: AuthStateType) => {
         return false;
     });
 
-    return pages;
+    return authorizedPages;
+}
+
+export const usePage = () => {
+    return {
+        allPages,
+        getPagesAuthorized
+    }
 }
