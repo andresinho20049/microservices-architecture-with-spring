@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { SESSION_BFF, SESSION_CLAIMS } from "./hooks/use-cookie";
+import { decodeSecFromBase64 } from "./hooks/use-encode";
 import { AuthStateType } from "./store/features/auth/auth-types";
 import { getPages } from "./utils/pages";
 
@@ -12,25 +13,29 @@ const middleware = (request: NextRequest) => {
 
     const cookie = request.cookies.get(SESSION_CLAIMS);
 
-    if(!cookie) return redirectError(request);
-
-    const data = Buffer.from(cookie.value, "base64").toString("ascii");
-    const authState:AuthStateType = JSON.parse(data);
-
-    const pages = getPages(authState);
-    const hasPage = pages.some(p => p.href === request.nextUrl.pathname);
-
-    if(!hasPage) return redirectError(request);
-
-    console.log("cookieData", data)
-    console.log("pages", JSON.stringify(pages))
-    console.log("hasPage", hasPage)
+    if(!cookie || !checksIfUserHasPermission(cookie.value, request.nextUrl.pathname)) return redirectError(request);
 
     return NextResponse.next();
 };
 
+const checksIfUserHasPermission = (cookieValue: string, pathname: string) => {
+
+    try {
+        const data = decodeSecFromBase64(cookieValue);
+        const authState:AuthStateType = JSON.parse(data);
+        
+        const pages = getPages(authState);
+        const hasPage = pages.some(p => p.href === pathname);
+        
+        return hasPage;
+    } catch (error) {
+        console.error(error);
+        return false;
+    }
+}
+
 const redirectError = (request: NextRequest) => {
-    return NextResponse.redirect(new URL("/", request.url));;
+    return NextResponse.redirect(new URL("/", request.url));
 };
 
 export default middleware;
