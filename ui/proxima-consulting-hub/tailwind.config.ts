@@ -29,14 +29,14 @@ const config: Config = {
             backgroundColor: {
                 "main-dark": customColors.black,
                 "main-light": customColors.fuchsia[50],
-                "second-dark": customColors.fuchsia[900],
-                "second-light": customColors.fuchsia[400],
+                "second-dark": customColors.gray[900],
+                "second-light": customColors.neutral[400],
             },
             fill: {
                 "main-dark": customColors.black,
                 "main-light": customColors.fuchsia[50],
-                "second-dark": customColors.fuchsia[900],
-                "second-light": customColors.fuchsia[400],
+                "second-dark": customColors.gray[900],
+                "second-light": customColors.neutral[400],
             },
         },
     },
