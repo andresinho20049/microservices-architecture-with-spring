@@ -1,5 +1,5 @@
 import type { NextConfig } from "next";
-import { gatewayHost } from "./src/services/base-api-gateway";
+import { gatewayHost } from "@/hub/store/service";
 
 const nextConfig: NextConfig = {
     output: "standalone",
