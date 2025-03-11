@@ -1,4 +1,4 @@
-import { GraphiQlActionResultType } from '@/hub/components/client/graphiql/graphiql-action';
+import { GraphiQlActionResultType } from '@/hub/components/client/graphiql/sidebar/graphiql-action';
 import { InputParam } from '@/hub/components/server/input/input-with-label';
 
 const companyByIdOption:{[key:string]:boolean | Object} = {
@@ -8,47 +8,51 @@ const companyByIdOption:{[key:string]:boolean | Object} = {
     taxId: false,
     description: false,
     positions: {
-    id: false,
-    name: false,
-    employees: {
         id: false,
         name: false,
-    },
-    },
-    employees: {
-    id: false,
-    name: false,
-    birthDate: false,
-    position: {
-        id: false,
-        name: false,
-    },
-    hireDate: false,
-    terminationDate: false,
-    note: false,
-    },
-    projects: {
-    id: false,
-    name: false,
-    description: false,
-    projectStart: false,
-    projectEnd: false,
-    timesheets: {
-        periodStart: false,
-        periodEnd: false,
         employees: {
             id: false,
             name: false,
             birthDate: false,
-            position: {
-            id: false,
-            name: false,
-            },
             hireDate: false,
             terminationDate: false,
             note: false,
-        }
+        },
     },
+    employees: {
+        id: false,
+        name: false,
+        birthDate: false,
+        position: {
+            id: false,
+            name: false,
+        },
+        hireDate: false,
+        terminationDate: false,
+        note: false,
+    },
+    projects: {
+        id: false,
+        name: false,
+        description: false,
+        projectStart: false,
+        projectEnd: false,
+        timesheets: {
+            periodStart: false,
+            periodEnd: false,
+            employee: {
+                id: false,
+                name: false,
+                birthDate: false,
+                position: {
+                    id: false,
+                    name: false,
+                },
+                hireDate: false,
+                terminationDate: false,
+                note: false,
+            }
+        },
     },
 };
 
@@ -56,19 +60,23 @@ const positionByCompanyIdOption:{[key:string]:boolean | Object} = {
     id: false,
     name: false,
     company: {
-    id: false,
-    name: false,
+        id: false,
+        name: false,
     },
     employees: {
-    id: false,
-    name: false,
-    paychecks: {
         id: false,
-        payDate: false,
-        grossEarn: false,
-        deduction: false,
-        netPay: false,
-    },
+        name: false,
+        birthDate: false,
+        hireDate: false,
+        terminationDate: false,
+        note: false,
+        paychecks: {
+            id: false,
+            payDate: false,
+            grossEarn: false,
+            deduction: false,
+            netPay: false,
+        },
     },
 };
 
@@ -80,68 +88,68 @@ const employeeByCompanyIdOption:{[key:string]:boolean | Object} = {
     terminationDate: false,
     note: false,
     company: {
-    id: false,
-    name: false,
-    },
-    position: {
-    id: false,
-    name: false,
-    },
-    paychecks: {
-    id: false,
-    payDate: false,
-    grossEarn: false,
-    deduction: false,
-    netPay: false,
-    },
-    timesheets: {
-    id: false,
-    project: {
         id: false,
         name: false,
-        description: false,
-        projectStart: false,
-        projectEnd: false
     },
-    periodStart: false,
-    periodEnd: false,
+    position: {
+        id: false,
+        name: false,
+    },
+    paychecks: {
+        id: false,
+        payDate: false,
+        grossEarn: false,
+        deduction: false,
+        netPay: false,
+    },
+    timesheets: {
+        id: false,
+        project: {
+            id: false,
+            name: false,
+            description: false,
+            projectStart: false,
+            projectEnd: false
+        },
+        periodStart: false,
+        periodEnd: false,
     },
 };
 
 const paycheckByCompanyIdOption:{[key:string]:boolean | Object} = {
     id: false,
-    company: {
-    id: false,
-    name: false,
-    },
-    employee: {
-    id: false,
-    name: false,
-    birthDate: false,
-    hireDate: false,
-    terminationDate: false,
-    note: false,
-    position: {
-        id: false,
-        name: false,
-    },
-    timesheets: {
-        id: false,
-        project: {
-        id: false,
-        name: false,
-        description: false,
-        projectStart: false,
-        projectEnd: false
-        },
-        periodStart: false,
-        periodEnd: false,
-    },
-    },
     payDate: false,
     grossEarn: false,
     deduction: false,
     netPay: false,
+    company: {
+        id: false,
+        name: false,
+    },
+    employee: {
+        id: false,
+        name: false,
+        birthDate: false,
+        hireDate: false,
+        terminationDate: false,
+        note: false,
+        position: {
+            id: false,
+            name: false,
+        },
+        timesheets: {
+            id: false,
+            project: {
+                id: false,
+                name: false,
+                description: false,
+                projectStart: false,
+                projectEnd: false
+            },
+            periodStart: false,
+            periodEnd: false,
+        },
+    }
 };
 
 const projectByCompanyIdOption:{[key:string]:boolean | Object} = {
@@ -151,25 +159,25 @@ const projectByCompanyIdOption:{[key:string]:boolean | Object} = {
     projectStart: false,
     projectEnd: false,
     company: {
-    id: false,
-    name: false,
+        id: false,
+        name: false,
     },
     timesheets: {
-    id: false,
-    employee: {
         id: false,
-        name: false,
-        birthDate: false,
-        hireDate: false,
-        terminationDate: false,
-        note: false,
-        position: {
-        id: false,
-        name: false,
-        },
-    },
-    periodStart: false,
-    periodEnd: false,
+        periodStart: false,
+        periodEnd: false,
+        employee: {
+            id: false,
+            name: false,
+            birthDate: false,
+            hireDate: false,
+            terminationDate: false,
+            note: false,
+            position: {
+                id: false,
+                name: false,
+            },
+        }
     },
 };
 
@@ -178,27 +186,27 @@ const timesheetByCompanyIdOption:{[key:string]:boolean | Object} = {
     periodStart: false,
     periodEnd: false,
     company: {
-    id: false,
-    name: false,
-    },
-    employee: {
-    id: false,
-    name: false,
-    birthDate: false,
-    hireDate: false,
-    terminationDate: false,
-    note: false,
-    position: {
         id: false,
         name: false,
     },
+    employee: {
+        id: false,
+        name: false,
+        birthDate: false,
+        hireDate: false,
+        terminationDate: false,
+        note: false,
+        position: {
+            id: false,
+            name: false,
+        },
     },
     project: {
-    id: false,
-    name: false,
-    description: false,
-    projectStart: false,
-    projectEnd: false
+        id: false,
+        name: false,
+        description: false,
+        projectStart: false,
+        projectEnd: false
     }
 };
 
@@ -278,7 +286,7 @@ export const MutationAction = () => {
 
 export const QueryAction = () => {
 
-    const defaultParamByCompanyId:InputParam[] = [{name: "companyId", label: "ID", type: "text", value: "1"}];
+    const defaultParamByCompanyId:InputParam[] = [{name: "companyId", label: "CompanyId", type: "text", value: ""}];
 
     const companyById = (): GraphiQlActionResultType => ({
         formFieldName: companyById.name,
@@ -287,13 +295,7 @@ export const QueryAction = () => {
                 name: "id",
                 label: "ID",
                 type: "text",
-                value: "1"
-            },
-            {
-                name: "teste",
-                label: "TESTE",
-                type: "number",
-                value: 1
+                value: ""
             }
         ],
         options: companyByIdOption
