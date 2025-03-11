@@ -4,8 +4,8 @@ import { MutationAction, QueryAction } from "@/hub/store/features/graphql/graphq
 import { useLazyGraphQLQuery } from "@/hub/store/features/graphql/graphql-api";
 import { useAppSelector } from "@/hub/store/hooks";
 import { MouseEvent } from "react";
-import { Accordion, AccordionItemType } from "../../server/accordion/accordion";
-import { ButtonHoverAnimation } from "../../server/button/button-hover-animation";
+import { Accordion, AccordionItemType } from "../../../server/accordion/accordion";
+import { ButtonHoverAnimation } from "../../../server/button/button-hover-animation";
 import { GraphiQlAction } from "./graphiql-action";
 
 export const GraphiQlDrawerContent = () => {

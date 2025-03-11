@@ -3,11 +3,11 @@
 import { setEnableReqState, setParamReqState, setResultReqState } from "@/hub/store/features/graphql/graphql-slice";
 import { useAppDispatch, useAppSelector } from "@/hub/store/hooks";
 import { ChangeEvent, use, useMemo } from "react";
-import DropdownMultiSelect from "../dropdown/dropdown-select/dropdown-multiselect";
-import { DropdownItemListProps } from "../../server/dropdown/dropdown-menu/dropdown-item-list";
-import { DropdownMenuList } from "../../server/dropdown/dropdown-menu/dropdown-menu-list";
-import { InputParam, InputWithLabel } from "../../server/input/input-with-label";
-import { SwitchAnimated } from "../../server/switch/switch-animated";
+import DropdownMultiSelect from "../../dropdown/dropdown-select/dropdown-multiselect";
+import { DropdownItemListProps } from "../../../server/dropdown/dropdown-menu/dropdown-item-list";
+import { DropdownMenuList } from "../../../server/dropdown/dropdown-menu/dropdown-menu-list";
+import { InputParam, InputWithLabel } from "../../../server/input/input-with-label";
+import { SwitchAnimated } from "../../../server/switch/switch-animated";
 
 export type GraphiQlActionResultType = {
     formFieldName: string;
@@ -56,7 +56,7 @@ export const GraphiQlAction = ({
         {
             title: "Params",
             subItems: paramsSubItems,
-            imageUrl: "/icons/graphql.svg"
+            imageUrl: "/icons/stars.svg"
         },
         {
             title: "ResutlQuery",

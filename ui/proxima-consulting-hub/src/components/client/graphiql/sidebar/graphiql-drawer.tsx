@@ -30,7 +30,7 @@ export const GraphiQlDrawer = () => {
     return (
         <aside className={`
                 ${open ? "px-4 w-full" : "px-2"}
-                flex h-full md:max-w-sm py-8
+                flex md:max-w-sm py-8
                 rounded-xl shadow-lg shadow-gray-950 dark:shadow-neutral-700 bg-second-light dark:bg-second-dark [&_h2]:text-gray-500 [&_h3]:text-stone-300 [&_h3]:dark:text-stone-500 
             `}>
                 <div className={`${open ? "" : "hidden"} w-full`}>

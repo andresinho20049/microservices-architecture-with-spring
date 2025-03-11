@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ReactNode } from "react";
 import { SvgArrowToggle } from "@/hub/components/server/svg/svg-arrow-toggle";
 
-type DropdownSubItemList = {
+export type DropdownSubItemList = {
     imageUrl?: string;
     title: string;
     action: string | ReactNode;
@@ -37,9 +37,9 @@ export const DropdownItemList = ({
                             width={48}
                         />
 
-                        <span>
+                        <strong>
                             {title}
-                        </span>
+                        </strong>
                     </div>
                     <SvgArrowToggle />
                 </summary>
@@ -60,13 +60,7 @@ export const DropdownItemList = ({
                                     />
                                 }
                                 { typeof item.action === "string" ? 
-                                    <Link href={item.action}>{item.title}</Link> :
-                                    <div>
-                                        <p>
-                                            {item.title}
-                                        </p>
-                                        {item.action}
-                                    </div>
+                                    <Link href={item.action}>{item.title}</Link> : item.action
                                 }
                             </li>
                         ))}
