@@ -11,7 +11,7 @@ type PageType = {
 const allPages: PageType[] = [
     {href: "/", label: "Home", requireAuthenticated: false},
     {href: "/secured", label: "Sec", requireAuthenticated: true},
-    {href: "/secured/customers", label: "Customers", requireAuthenticated: true, requireRole: ["ADMIN"]},
+    {href: "/secured/graphiql", label: "GraphiQL", requireAuthenticated: true, requireRole: ["ADMIN"]},
     {href: "/about", label: "About", requireAuthenticated: false}
 ]
 
