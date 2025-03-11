@@ -37,10 +37,7 @@ export const graphqlSlice = createSlice({
     extraReducers: (builder: ActionReducerMapBuilder<initialStateType>) => { 
         builder
         .addMatcher(graphqlApi.endpoints.graphQL.matchFulfilled, (state, {payload:DataRTKQueryResponseType}) => {
-            const res = DataRTKQueryResponseType;
-            console.log(res)
-            const {data} = res;
-            console.log(data)
+            const {data} = DataRTKQueryResponseType;
             if(!!data) {
                 if(!!data?.companyById) {
                     state.query.companyById = data.companyById;

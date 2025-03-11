@@ -41,7 +41,6 @@ export const GraphiQlAction = ({
     }
 
     const onChangeDropdown = (options: {[key: string]: any}) => {
-        console.log(options);
         dispatch(setResultReqState({key: formFieldName, content: options}));
     }
 
