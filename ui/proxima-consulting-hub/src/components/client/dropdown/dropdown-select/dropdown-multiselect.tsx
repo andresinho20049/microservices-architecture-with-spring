@@ -44,11 +44,11 @@ export default function DropdownMultiSelect({
     <label className="[&_div]:w-full">
       <input type="checkbox" className="hidden peer" />
 
-      <div className="cursor-pointer after:content-['▼'] after:text-xs after:ml-1 after:inline-flex after:items-center peer-checked:after:-rotate-180 after:transition-transform inline-flex border border-gray-200 rounded-sm px-5 py-2">
+      <div className="cursor-pointer after:content-['▼'] after:text-xs after:ml-1 after:inline-flex after:items-center peer-checked:after:-rotate-180 after:transition-transform inline-flex border border-gray-700 dark:border-gray-200 rounded-sm px-5 py-2">
         {prompt}
       </div>
 
-      <div className="[&_p]:font-semibold [&_p]:text-black [&_span]:text-black bg-white border border-gray-200 transition-opacity hidden pointer-events-none peer-checked:block peer-checked:pointer-events-auto max-h-60 overflow-y-scroll">
+      <div className="[&_p]:font-semibold [&_p]:text-black [&_span]:text-black bg-white border border-gray-700 dark:border-gray-200  transition-opacity hidden pointer-events-none peer-checked:block peer-checked:pointer-events-auto max-h-60 overflow-y-scroll">
         <ul ref={optionsListRef}>
             <DropdownMultiSelectItem 
               formFieldName={formFieldName}
