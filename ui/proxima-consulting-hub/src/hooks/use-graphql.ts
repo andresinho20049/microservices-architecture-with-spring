@@ -21,6 +21,8 @@ const generateGraphQlBody = (operation: "query" | "mutation", request: GraphQlRe
 
 const propertiesToString = (data: {[key:string]:any}) => {
 
+    if(!data) return "";
+
     const joinStr = ", "
 
     const fields = [];
@@ -38,6 +40,8 @@ const propertiesToString = (data: {[key:string]:any}) => {
 }
 
 const bodyToString = (data: {[key:string]:any}):string => {
+
+    if(!data) return "";
 
     const joinStr = " "
 
