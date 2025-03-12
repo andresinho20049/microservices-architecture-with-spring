@@ -101,6 +101,7 @@ const DropdownMultiSelectItem = ({
               type="checkbox"
               name={formFieldName}
               value={p}
+              checked={options[p]}
               className="cursor-pointer"
               onChange={(e) => handleChange(e, fathers)}
             />

@@ -1,7 +1,8 @@
 import { GraphiQlActionResultType } from '@/hub/components/client/graphiql/sidebar/graphiql-action';
 import { InputParam } from '@/hub/components/server/input/input-with-label';
+import { useAppSelector } from '../../hooks';
 
-const companyByIdOption:{[key:string]:boolean | Object} = {
+const companyByIdDefaultOption:{[key:string]:boolean | Object} = {
     id: false,
     name: false,
     shortName: false,
@@ -56,7 +57,7 @@ const companyByIdOption:{[key:string]:boolean | Object} = {
     },
 };
 
-const positionByCompanyIdOption:{[key:string]:boolean | Object} = {
+const positionByCompanyIdDefaultOption:{[key:string]:boolean | Object} = {
     id: false,
     name: false,
     company: {
@@ -80,7 +81,7 @@ const positionByCompanyIdOption:{[key:string]:boolean | Object} = {
     },
 };
 
-const employeeByCompanyIdOption:{[key:string]:boolean | Object} = {
+const employeeByCompanyIdDefaultOption:{[key:string]:boolean | Object} = {
     id: false,
     name: false,
     birthDate: false,
@@ -116,7 +117,7 @@ const employeeByCompanyIdOption:{[key:string]:boolean | Object} = {
     },
 };
 
-const paycheckByCompanyIdOption:{[key:string]:boolean | Object} = {
+const paycheckByCompanyIdDefaultOption:{[key:string]:boolean | Object} = {
     id: false,
     payDate: false,
     grossEarn: false,
@@ -152,7 +153,7 @@ const paycheckByCompanyIdOption:{[key:string]:boolean | Object} = {
     }
 };
 
-const projectByCompanyIdOption:{[key:string]:boolean | Object} = {
+const projectByCompanyIdDefaultOption:{[key:string]:boolean | Object} = {
     id: false,
     name: false,
     description: false,
@@ -181,7 +182,7 @@ const projectByCompanyIdOption:{[key:string]:boolean | Object} = {
     },
 };
 
-const timesheetByCompanyIdOption:{[key:string]:boolean | Object} = {
+const timesheetByCompanyIdDefaultOption:{[key:string]:boolean | Object} = {
     id: false,
     periodStart: false,
     periodEnd: false,
@@ -212,6 +213,8 @@ const timesheetByCompanyIdOption:{[key:string]:boolean | Object} = {
 
 export const MutationAction = () => {
 
+    const { reqState } = useAppSelector(state => state.graphql);
+
     const createPosition = (): GraphiQlActionResultType => ({
         formFieldName: createPosition.name,
         inputs: [
@@ -228,7 +231,7 @@ export const MutationAction = () => {
                 value: "Position name"
             }
         ],
-        options: positionByCompanyIdOption
+        options: reqState[createPosition.name]?.result ||  positionByCompanyIdDefaultOption
     });
 
     const createEmployee = (): GraphiQlActionResultType => ({
@@ -277,7 +280,7 @@ export const MutationAction = () => {
                 value: ""
             }
         ],
-        options: employeeByCompanyIdOption
+        options: reqState[createEmployee.name]?.result ||  employeeByCompanyIdDefaultOption
     });
 
     return { createPosition, createEmployee };
@@ -285,6 +288,8 @@ export const MutationAction = () => {
 
 
 export const QueryAction = () => {
+
+    const { reqState } = useAppSelector(state => state.graphql);
 
     const defaultParamByCompanyId:InputParam[] = [{name: "companyId", label: "CompanyId", type: "text", value: ""}];
 
@@ -298,37 +303,37 @@ export const QueryAction = () => {
                 value: ""
             }
         ],
-        options: companyByIdOption
+        options: reqState[companyById.name]?.result || companyByIdDefaultOption
     })
 
     const positionByCompanyId = (): GraphiQlActionResultType => ({
         formFieldName: positionByCompanyId.name,
         inputs: defaultParamByCompanyId,
-        options: positionByCompanyIdOption
+        options: reqState[positionByCompanyId.name]?.result ||  positionByCompanyIdDefaultOption
     });
 
     const employeeByCompanyId = (): GraphiQlActionResultType => ({
         formFieldName: employeeByCompanyId.name,
         inputs: defaultParamByCompanyId,
-        options: employeeByCompanyIdOption
+        options: reqState[employeeByCompanyId.name]?.result ||  employeeByCompanyIdDefaultOption
     });
 
     const paycheckByCompanyId = (): GraphiQlActionResultType => ({
         formFieldName: paycheckByCompanyId.name,
         inputs: defaultParamByCompanyId,
-        options: paycheckByCompanyIdOption
+        options: reqState[paycheckByCompanyId.name]?.result ||  paycheckByCompanyIdDefaultOption
     });
 
     const projectByCompanyId = (): GraphiQlActionResultType => ({
         formFieldName: projectByCompanyId.name,
         inputs: defaultParamByCompanyId,
-        options: projectByCompanyIdOption
+        options: reqState[projectByCompanyId.name]?.result ||  projectByCompanyIdDefaultOption
     });
 
     const timesheetByCompanyId = (): GraphiQlActionResultType => ({
         formFieldName: timesheetByCompanyId.name,
         inputs: defaultParamByCompanyId,
-        options: timesheetByCompanyIdOption
+        options: reqState[timesheetByCompanyId.name]?.result ||  timesheetByCompanyIdDefaultOption
     });
 
     return { companyById, positionByCompanyId, employeeByCompanyId, paycheckByCompanyId, projectByCompanyId, timesheetByCompanyId };
