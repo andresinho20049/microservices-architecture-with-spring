@@ -35,10 +35,10 @@ export const FullHeroSection = ({
 
     return (
         <section
-            className={`flex flex-wrap h-screen max-w-screen-2xl mx-auto ${imgSide === "Right" ? "text-end" : "text-start"}`}
+            className={`flex flex-wrap h-screen max-w-screen-2xl mx-auto ${imgSide === "Right" ? "[&_h2]:text-end [&_p]:text-end" : "[&_h2]:text-start [&_p]:text-start"}`}
         >
             <section
-                className={`px-4 flex items-center w-full h-full lg:w-8/12 lg:mt-0`}
+                className={`px-4 flex items-center w-full h-full lg:w-7/12 lg:mt-0`}
             >
                 <div
                     className={`flex flex-col w-full ${imgSide === "Right" ? "items-end" : "items-start"}`}
@@ -57,7 +57,7 @@ export const FullHeroSection = ({
                 </div>
             </section>
             <section
-                className={`hidden lg:flex h-full w-4/12 px-2 items-center ${imgSide === "Right" ? "order-first" : "order-last"}`}
+                className={`hidden lg:flex h-full w-5/12 px-2 items-center ${imgSide === "Right" ? "order-first" : "order-last"}`}
             >
                 <Image
                     width={960}

@@ -4,6 +4,7 @@ import {
     TagCloudType,
 } from "@/hub/components/server/section/tag-cloud";
 import { Metadata } from "next";
+import Image from "next/image";
 
 export const metadata: Metadata = {
     title: "About"
@@ -12,21 +13,45 @@ export const metadata: Metadata = {
 export default function About() {
     const tags: TagCloudType[] = [
         {
-            label: "String",
-            link: "https://github.com/andresinho20049/Generic-Dao",
+            label: "Authorization Server",
+            link: "https://github.com/andresinho20049/microservices-architecture-with-spring/tree/main/authorization-server",
         },
-        "NextJs",
-        "Authorization Server",
-        "Guideline Git",
-        "Middleware",
-        "Gateway",
-        "Oauth2",
-        "SSR/CSR/SSG",
-        { label: "Resource Server", link: "/" },
-        "Ngnix",
-        "Docker",
-        "Context",
-        "Abstract Components",
+        {
+            label: "Spring Cloud Gateway",
+            link: "https://github.com/andresinho20049/microservices-architecture-with-spring/tree/main/oauth2-client-gateway",
+        },
+        {
+            label: "Discovery Service",
+            link: "https://github.com/andresinho20049/microservices-architecture-with-spring/tree/main/discovery-service",
+        },
+        {
+            label: "Resource Server",
+            link: "https://github.com/andresinho20049/microservices-architecture-with-spring/tree/main/resource",
+        },
+        {
+            label: "UI (Micro-Frontend)",
+            link: "https://github.com/andresinho20049/microservices-architecture-with-spring/tree/main/ui",
+        },
+        {
+            label: "Next.js (SSR, SSG and CSR)",
+            link: "https://github.com/andresinho20049/microservices-architecture-with-spring/tree/main/ui/proxima-consulting-hub",
+        },
+        {
+            label: "PL/SQL (Postgresql)",
+            link: "https://github.com/andresinho20049/microservices-architecture-with-spring/tree/main/resource/database",
+        },
+        {
+            label: "Spring GraphQL",
+            link: "https://github.com/andresinho20049/microservices-architecture-with-spring/tree/main/resource/spring-graphql",
+        },
+        {
+            label: "Docker",
+            link: "https://github.com/andresinho20049/microservices-architecture-with-spring/blob/main/docker-compose.yaml",
+        },
+        {
+            label: "GIT",
+            link: "https://github.com/andresinho20049/microservices-architecture-with-spring/blob/main/commit-guidelines.md",
+        },
     ];
 
     return (
@@ -34,8 +59,15 @@ export default function About() {
             <FullHeroSection
                 title={aboutHeader}
                 msg={aboutDescription}
-                imgSrc="/imgs/Logo.png"
+                imgSrc="/imgs/microservices-architecture-with-spring-Page-2.drawio.svg"
                 imgSide="Left"
+            />
+            <Image
+                className="w-10/12 mx-auto my-2"
+                alt="Diagram Architecture"
+                src="/imgs/microservices-architecture-with-spring.drawio.svg"
+                width={1841}
+                height={1024}
             />
             <div className="w-full flex justify-center">
                 <TagCloud tags={tags} />
@@ -52,71 +84,43 @@ const aboutHeader = (
 );
 
 const aboutDescription = (
-    <div className="[&_strong]:text-second [&_p]:font-semibold">
-        <h3>The system consists of four main components:</h3>
-        <ol>
-            <li>
-                <strong>Spring Authorization Server</strong>
-                <p>Manages user authentication and authorization</p>
-                <ul className="ps-5">
-                    <li>
-                        Built with: Spring Security and
-                        oauth2-authorization-server
-                    </li>
-                    <li>
-                        Integrates with the Client Server for authentication and
-                        authorization checks
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <strong>Resource Server</strong>
-                <p>
-                    Handles business logic and provides data access to clients
-                </p>
-                <ul className="ps-5">
-                    <li>
-                        Built with: Spring Web, oauth2-resource-server and
-                        oauth2-jose
-                    </li>
-                    <li>
-                        i.e.: Exposes GraphQL endpoints for data retrieval and
-                        manipulation
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <strong>Client Server</strong>
-                <p>
-                    Acts as an entry point for clients, routing incoming
-                    requests to the Resource Server
-                </p>
-                <ul className="ps-5">
-                    <li>Built with: Spring Web and oauth2-client</li>
-                    <li>
-                        i.e.: Spring Gateway being a client of our authorization
-                        server
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <strong>Frontend (Next.js)</strong>
-                <p>
-                    A web portal with good UX/UI practices developed with
-                    Next.Js
-                </p>
-                <ul className="ps-5">
-                    <li>
-                        Handles frontend logic, interacting with the BFF
-                        (Backend For Frontend) through the Gateway Server.
-                    </li>
-                    <li>
-                        The portal has middleware, authentication context and
-                        cookie validation on the server side for secure
-                        browsing.
-                    </li>
-                </ul>
-            </li>
-        </ol>
+    <div className="[&_strong]:text-second [&_h3]:underline">
+      <h2>About Proxima Consulting</h2>
+      <p>
+        Proxima Consulting is a <strong>fictitious consulting</strong> company. 
+        Our business case is to manage our clients' projects, in order to bring valuable insights such as employee hours per project, 
+        value allocated to projects and many others. With our <strong>dynamic query service</strong>, 
+        we can consult different types of data and present them in a simple and intuitive way.
+      </p>
+      <h3>Our Architecture</h3>
+        Proxima Consulting's website utilizes a microservices architecture
+        powered by 
+        <ul className="[&_strong]:text-gray-500">
+          <li>
+            <strong>Spring Authorization Server</strong>
+          </li>
+          <li>
+            <strong>Spring Cloud Gateway</strong>
+          </li>
+          <li>
+            <strong>Spring Eureka Server</strong>
+          </li>
+          <li>
+            <strong>Spring Resource Server</strong>
+          </li>
+        </ul>
+        This architecture provides robust security, scalability, and flexibility.
+      <h3>Front-end Development</h3>
+      <p>
+        The front-end of our website is built using Next.js, a popular
+        React-based framework. We utilize secure routing and validation
+        mechanisms to ensure access to protected pages is restricted to authorized
+        users based on their roles.
+      </p>
+      <h3>Authentication</h3>
+      <p>
+        Our website employs the BFF (Backend for Frontend) authentication
+        flow to ensure seamless and secure login experiences for users.
+      </p>
     </div>
 );

@@ -16,7 +16,7 @@
         @apply text-2xl font-semibold tracking-wider text-start text-balance text-stone-700 dark:text-stone-400 select-none;
     }
     p {
-        @apply text-base/relaxed font-normal tracking-normal text-justify text-balance text-stone-900 dark:text-stone-100 whitespace-pre-line;
+        @apply text-base/relaxed font-normal tracking-normal text-start text-balance text-stone-900 dark:text-stone-100 whitespace-pre-line;
     }
     span {
         @apply text-base/relaxed font-light tracking-normal text-stone-900 dark:text-stone-100 select-none;

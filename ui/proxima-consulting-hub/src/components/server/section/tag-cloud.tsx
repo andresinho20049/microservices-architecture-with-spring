@@ -62,7 +62,7 @@ const TagCloudItem = ({ tag, color, size }: TagCloudItemProps) =>
         <li className={`${color} ${size}`}>{tag}</li>
     ) : (
         <li>
-            <Link href={tag.link} className={`${color} ${size}`}>
+            <Link href={tag.link} target={tag.link.startsWith("/") ? "" : "_blank"} className={`${color} ${size}`}>
                 {tag.label}
             </Link>
         </li>
