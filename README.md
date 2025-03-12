@@ -20,6 +20,8 @@ This project demonstrates a scalable and secure microservices architecture built
 14. [Copyright](#copyright-copyright)
 
 ## :small_orange_diamond: Architecture Overview
+![Diagram Architecture](./ui/proxima-consulting-hub/public/imgs/microservices-architecture-with-spring.drawio.svg)
+
 <p align="center">
   <code><img width="40px" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" title = "GIT"/></code>
   <code><img width="40px" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" title = "DOCKER"/></code>
@@ -51,8 +53,8 @@ Resource servers can be any service your business needs. In this architecture, t
 
 This could be a service, data access, or a web console.
 
-**Web Portal:** \
-Uses the BFF (Backend For Frontend) flow to authenticate users and access resources.
+**UI:** \
+This architecture allows the creation of a public interface (user interface), such as the hub that has authentication through the `BFF` flow, and it is also possible to develop an interface such as resource servers. This approach is known as micro-front-end.
 
 ### Advantages:
 * **Decoupled Architecture:** Enables the inclusion of microservices with different technologies.
