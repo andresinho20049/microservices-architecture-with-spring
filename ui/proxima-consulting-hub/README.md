@@ -1,3 +1,5 @@
+[to go back](/ui/README.md)
+
 # Proxima Consulting HUB
 
 This web portal was built using NextJs 15.1 and React 19, leveraging industry best practices to provide a secure and efficient user experience. The portal accesses secure resources through a Gateway built on Spring Boot, which acts as a client to an OAuth2 Authorization Server, implementing the popular BFF (Backend For Frontend) authentication flow.
@@ -9,7 +11,7 @@ Upon successful login, the Authorization Server redirects the user to the portal
 
 Upon successful authentication, the gateway manages access tokens and issues session cookies to the browser.
 
-![Diagram BFF](./public/imgs/microservices-architecture-with-spring-Page-2.drawio.svg)
+![Diagram BFF](public/imgs/microservices-architecture-with-spring-Page-2.drawio.svg)
 
 ## Security Considerations
 The project adheres to secure authentication practices by only including session cookies in requests, which are passed between the client and server to maintain the user's login state. This approach provides several benefits:

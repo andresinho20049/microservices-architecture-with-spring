@@ -20,7 +20,7 @@ This project demonstrates a scalable and secure microservices architecture built
 14. [Copyright](#copyright-copyright)
 
 ## :small_orange_diamond: Architecture Overview
-![Diagram Architecture](./ui/proxima-consulting-hub/public/imgs/microservices-architecture-with-spring.drawio.svg)
+![Diagram Architecture](./ui/proxima-consulting-hub/public/imgs/microservices-architecture-with-spring-Page-1.drawio.svg)
 
 <p align="center">
   <code><img width="40px" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" title = "GIT"/></code>
@@ -37,23 +37,26 @@ This project demonstrates a scalable and secure microservices architecture built
 
 This project is composed of the following modules:
 
-**Authorization Server:** \
+**[Authorization Server](/authorization-server/README.md):** \
 Secure OAuth2 server built on Spring 3.4.2 and Spring Security 6.4.2. \
 Managing client, user authentication and profile management, token issuance, and update in a dedicated database. 
 
 Includes Role-Based Access Control (RBAC) with fine-grained permissions for secure authorization.
 
-**Gateway:** \
+**[Gateway](/oauth2-client-gateway/README.md):** \
 Centralized authentication, improved security, and scalability in one architecture.
 * Verifies user identities via Authorization Server
 * Routes authenticated requests to protected resources
 
-**Resource Servers:** \
+**[Discovery Service](/discovery-service/README.md):** \
+Eureka Server is a discovery service that works in conjunction with a gateway to manage and discover instances of a microservice architecture. It provides a centralized platform for registering and discovering services, enabling load balancing, instance management, and security features.
+
+**[Resource Servers](/resource/README.md):** \
 Resource servers can be any service your business needs. In this architecture, they are placed behind the gateway to ensure that authentication and authorization settings are performed when providing access to a resource.
 
 This could be a service, data access, or a web console.
 
-**UI:** \
+**[UI](/ui/README.md):** \
 This architecture allows the creation of a public interface (user interface), such as the hub that has authentication through the `BFF` flow, and it is also possible to develop an interface such as resource servers. This approach is known as micro-front-end.
 
 ### Advantages:
@@ -95,6 +98,8 @@ Execute `docker compose --env-file=./.env up`
 **Note:** The first execution may take longer than a minute due to the initial image download.
 
 Once the project is running, you can access the web portal at `http://localhost:3000` and start testing the features and services.
+
+> For contributions and version control [see](/commit-guidelines.md).
 
 ## :whale2: Advantages of Using Docker and Docker Compose
 Our team used Docker and Docker Compose to containerize our application, achieving several benefits:
