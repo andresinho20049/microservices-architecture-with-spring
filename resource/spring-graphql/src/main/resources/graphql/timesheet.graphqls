@@ -1,0 +1,20 @@
+type Timesheet {
+  id: ID!
+  createdAt: String!
+  updatedAt: String!
+  updatedUsername: String!
+  employee: Employee!
+  project: Project!
+  periodStart: String!
+  periodEnd: String!
+  company: Company!
+}
+
+# Mutation
+input TimesheetInput {
+  companyId: Int!
+  employeeId: Int!
+  projectId: Int!
+  periodStart: String!
+  periodEnd: String
+}

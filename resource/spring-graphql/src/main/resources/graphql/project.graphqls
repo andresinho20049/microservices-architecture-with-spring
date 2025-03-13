@@ -1,0 +1,21 @@
+type Project {
+  id: ID!
+  createdAt: String!
+  updatedAt: String!
+  updatedUsername: String!
+  name: String
+  description: String
+  projectStart: String!
+  projectEnd: String
+  company: Company!
+  timesheets: [Timesheet!]!
+}
+
+# Mutation
+input ProjectInput {
+  companyId: Int!
+  name: String!
+  description: String
+  projectStart: String!
+  projectEnd: String
+}

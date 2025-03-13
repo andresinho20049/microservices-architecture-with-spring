@@ -1,0 +1,28 @@
+schema {
+  query: Query
+  mutation: Mutation
+}
+
+type Query {
+  companyById(id: ID!): Company
+  employeeByCompanyId(companyId: ID!): [Employee]
+  projectByCompanyId(companyId: ID!): [Project]
+  positionByCompanyId(companyId: ID!): [Position]
+  paycheckByCompanyId(companyId: ID!): [Paycheck]
+  timesheetByCompanyId(companyId: ID!): [Timesheet]
+}
+
+type Mutation {
+  createEmployee(employee: EmployeeInput!): Employee
+  createPosition(position: PositionInput!): Position
+  createPaycheck(paycheck: PaycheckInput!): Paycheck
+  createProject(project: ProjectInput!): Project
+  createTimesheet(timesheet: TimesheetInput!): Timesheet
+
+  updateEmployee(id: ID!, employee: EmployeeInput!): Employee
+  updatePosition(id: ID!, position: PositionInput!): Position
+  updatePaycheck(id: ID!, paycheck: PaycheckInput!): Paycheck
+  updateProject(id: ID!, project: ProjectInput!): Project
+  updateTimesheet(id: ID!, timesheet: TimesheetInput!): Timesheet
+}
+

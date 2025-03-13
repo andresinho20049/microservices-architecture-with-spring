@@ -1,5 +1,9 @@
 name: microservices-spring
 
+include:
+  - ./resource/docker-compose.yaml
+  - ./ui/docker-compose.yaml
+
 services:
   authorization-server:
     build: ./authorization-server
@@ -13,8 +17,9 @@ services:
       start_period: 30s
       timeout: 10s
     environment:
-      WEB_HOST: ${WEB_HOST}
-      GATEWAY_HOST: ${GATEWAY_HOST}
+      AUTH_PORT: ${AUTH_PORT}
+      ADMIN_USERNAME: ${ADMIN_USERNAME}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
       RESOURCE_CLIENT_ID: ${RESOURCE_CLIENT_ID}
       RESOURCE_SECRET_ID: ${RESOURCE_SECRET_ID}
       BFF_CLIENT_ID: ${BFF_CLIENT_ID}
@@ -24,56 +29,57 @@ services:
       AUTH_DB_NAME: ${AUTH_DB_NAME}
       AUTH_DB_USER: ${AUTH_DB_USER}
       AUTH_DB_PASSWORD: ${AUTH_DB_PASSWORD}
-      ADMIN_USERNAME: ${ADMIN_USERNAME}
-      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+      WEB_HOST: ${HUB_URI}
+      GATEWAY_HOST: ${GATEWAY_URI}
     depends_on:
       postgresql_auth:
         condition: service_healthy
-  
+
+  discovery-service:
+    build: ./discovery-service
+    network_mode: host
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "curl --fail --silent localhost:8761/actuator/health | grep UP || exit 1"]
+      interval: 45s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
+    environment:
+      EUREKA_USER: ${EUREKA_USER}
+      EUREKA_PASS: ${EUREKA_PASS}
+      EUREKA_HOST: ${EUREKA_HOST}
+      EUREKA_PORT: ${EUREKA_PORT}
+      AUTH_URI: ${AUTH_URI}
+    depends_on:
+      authorization-server:
+        condition: service_healthy
+
   oauth2-client-gateway:
     build: ./oauth2-client-gateway
     network_mode: host
     restart: always
     pull_policy: always
     environment:
-      WEB_HOST: ${WEB_HOST}
-      GATEWAY_HOST: ${GATEWAY_HOST}
-      AUTHORIZATION_HOST: ${AUTHORIZATION_HOST}
-      RESOURCE_CLIENT_ID: ${RESOURCE_CLIENT_ID}
-      RESOURCE_SECRET_ID: ${RESOURCE_SECRET_ID}
+      GATEWAY_PORT: ${GATEWAY_PORT}
       BFF_CLIENT_ID: ${BFF_CLIENT_ID}
       BFF_SECRET_ID: ${BFF_SECRET_ID}
+      RESOURCE_CLIENT_ID: ${RESOURCE_CLIENT_ID}
+      RESOURCE_SECRET_ID: ${RESOURCE_SECRET_ID}
+      EUREKA_PROTOCOL: ${EUREKA_PROTOCOL}
+      EUREKA_HOST: ${EUREKA_HOST}
+      EUREKA_PORT: ${EUREKA_PORT}
+      EUREKA_USER: ${EUREKA_USER}
+      EUREKA_PASS: ${EUREKA_PASS}
+      WEB_HOST: ${HUB_URI}
+      AUTHORIZATION_HOST: ${AUTH_URI}
+      ALLOWS_CORS_ORIGIN: ${ALLOWS_CORS_ORIGIN}
     depends_on:
-      authorization-server:
+      spring-graphql:
         condition: service_healthy
 
-  web-consulting-hub:
-    build: ./web/proxima-consulting-hub
-    network_mode: host
-    environment:
-      GATEWAY_HOST: ${GATEWAY_HOST}
-    depends_on:
-      oauth2-client-gateway:
-        condition: service_started
-
-  # postgresql:
-  #   image: postgres:15.10-alpine3.20
-  #   network_mode: host
-  #   restart: always
-  #   hostname: ${DATABASE_HOST}
-  #   environment:
-  #     POSTGRES_DB: ${DATABASE_NAME}
-  #     PGPORT: ${DATABASE_PORT}
-
-  #     POSTGRES_USER: ${DATABASE_USER}
-  #     POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
-  #     POSTGRES_ROOT_PASSWORD: ${DATABASE_ROOT_PASSWORD}
-  #   volumes:
-  #     - vl-postgres-data:/var/lib/postgresql/data
-  #     - ./database/:/docker-entrypoint-initdb.d/
-
   postgresql_auth:
-    image: postgres:15.10-alpine3.20
+    image: postgres:17-alpine3.19
     network_mode: host
     restart: always
     healthcheck:
@@ -97,5 +103,4 @@ networks:
     name: nt-microservices-spring
 
 volumes:
-  vl-postgres-data:
   vl-postgres-authdata:

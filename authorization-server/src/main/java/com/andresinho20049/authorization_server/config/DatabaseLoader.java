@@ -26,7 +26,7 @@ public class DatabaseLoader {
     @Value("${ADMIN_USERNAME:admin}")
     private String adminUsername;
 
-    @Value("${ADMIN_PASSWORD:admin}")
+    @Value("${ADMIN_PASSWORD:password}")
     private String adminPassword;
 
     @Value("${RESOURCE_CLIENT_ID:resourceClient}")
@@ -103,10 +103,9 @@ public class DatabaseLoader {
             .clientSecret(passwordEncoder.encode(resourceSecret))
             .clientName("resource-client")
             .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
-            .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
-            .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
             .authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
-            .redirectUri("%s/login/oauth2/code/oidc-client".formatted(gatewayHost))
+            .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
+            .redirectUri("%s/login/oauth2/code/resource-client".formatted(gatewayHost))
             .postLogoutRedirectUri(gatewayHost)
             .scope(OidcScopes.OPENID)
             .scope(OidcScopes.PROFILE)

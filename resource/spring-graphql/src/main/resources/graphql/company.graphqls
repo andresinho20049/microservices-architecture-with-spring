@@ -1,0 +1,13 @@
+type Company {
+  id: ID!
+  createdAt: String!
+  updatedAt: String!
+  updatedUsername: String!
+  name: String!
+  shortName: String!
+  taxId: String!
+  description: String
+  positions: [Position!]!
+  employees: [Employee!]!
+  projects: [Project!]!
+}

@@ -1,0 +1,62 @@
+type Position {
+  id: ID!
+  createdAt: String!
+  updatedAt: String!
+  updatedUsername: String!
+  name: String!
+  company: Company!
+  employees: [Employee!]!
+}
+
+type Employee {
+  id: ID!
+  createdAt: String!
+  updatedAt: String!
+  updatedUsername: String!
+  name: String!
+  birthDate: String
+  position: Position!
+  hireDate: String!
+  terminationDate: String
+  note: String
+  company: Company!
+  paychecks: [Paycheck!]!
+  timesheets: [Timesheet!]!
+}
+
+type Paycheck {
+  id: ID!
+  createdAt: String!
+  updatedAt: String!
+  updatedUsername: String!
+  employee: Employee!
+  payDate: String!
+  grossEarn: Float!
+  deduction: Float!
+  netPay: Float!
+  company: Company!
+}
+
+# Mutation
+input PositionInput {
+  companyId: Int!
+  name: String!
+}
+
+input EmployeeInput {
+  companyId: Int!
+  name: String!
+  birthDate: String!
+  positionId: Int!
+  hireDate: String!
+  terminationDate: String
+  note: String
+}
+
+input PaycheckInput {
+  companyId: Int!
+  employeeId: Int!
+  payDate: String!
+  grossEarn: Float!
+  deduction: Float!
+}

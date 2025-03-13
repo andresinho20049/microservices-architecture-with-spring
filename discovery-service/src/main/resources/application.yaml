@@ -1,0 +1,31 @@
+server:
+    port: ${EUREKA_PORT:8761}
+
+spring:
+    application:
+        name: discovery-service
+    security:
+        user: 
+            name: ${EUREKA_USER:eureka}
+            password: ${EUREKA_PASS:eureka_pass}
+        oauth2:
+            client:
+                registration:
+                    resource-client:
+                        client-id: ${RESOURCE_CLIENT_ID:resourceClient}
+                        client-secret: ${RESOURCE_SECRET_ID:resourceSecret}
+                        authorization-grant-type: client_credentials
+                        client-authentication-method: client_secret_basic
+                        provider: spring
+                        scope: openid,profile
+                        client-name: resource-client
+                provider:
+                    spring:
+                        issuer-uri: ${AUTH_URI:http://localhost:9000}
+
+eureka:
+    instance:
+        hostname: ${EUREKA_HOST:localhost}
+    client:
+        register-with-eureka: false
+        fetch-registry: false

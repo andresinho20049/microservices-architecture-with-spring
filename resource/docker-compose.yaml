@@ -1,0 +1,56 @@
+
+services:
+  spring-graphql:
+    build: ./spring-graphql
+    network_mode: host
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/app/healthcheck.sh"]
+      interval: 45s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
+    environment:
+      GRAPHQL_PORT: ${GRAPHQL_PORT}
+      DATABASE_HOST: ${DATABASE_HOST}
+      DATABASE_PORT: ${DATABASE_PORT}
+      DATABASE_NAME: ${DATABASE_NAME}
+      DATABASE_USER: ${DATABASE_USER}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      EUREKA_PROTOCOL: ${EUREKA_PROTOCOL}
+      EUREKA_HOST: ${EUREKA_HOST}
+      EUREKA_PORT: ${EUREKA_PORT}
+      EUREKA_USER: ${EUREKA_USER}
+      EUREKA_PASS: ${EUREKA_PASS}
+      AUTH_URI: ${AUTH_URI}
+      RESOURCE_CLIENT_ID: ${RESOURCE_CLIENT_ID}
+      RESOURCE_SECRET_ID: ${RESOURCE_SECRET_ID}
+    depends_on:
+      postgresql:
+        condition: service_healthy
+      discovery-service:
+        condition: service_healthy
+
+  postgresql:
+    image: postgres:17-alpine3.19
+    network_mode: host
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
+    hostname: ${DATABASE_HOST}
+    environment:
+      POSTGRES_DB: ${DATABASE_NAME}
+      PGPORT: ${DATABASE_PORT}
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_ROOT_PASSWORD: ${DATABASE_ROOT_PASSWORD}
+    volumes:
+      - ./database/:/docker-entrypoint-initdb.d/
+      # - vl-postgres-data:/var/lib/postgresql/data
+
+# volumes:
+#   vl-postgres-data:
