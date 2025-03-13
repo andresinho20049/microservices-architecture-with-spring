@@ -65,7 +65,7 @@ export default function About() {
             <Image
                 className="w-10/12 mx-auto my-2"
                 alt="Diagram Architecture"
-                src="/imgs/microservices-architecture-with-spring.drawio.svg"
+                src="/imgs/microservices-architecture-with-spring-Page-1.drawio.svg"
                 width={1841}
                 height={1024}
             />
