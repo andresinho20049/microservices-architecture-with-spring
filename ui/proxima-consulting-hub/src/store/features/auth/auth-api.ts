@@ -6,13 +6,13 @@ const authApi = createApi({
     reducerPath: "authApi",
     baseQuery: fetchBaseGateway,
     endpoints: (builder) => ({
-        getAuthData: builder.query<UserAuthenticatedType, {}>({
+        getAuthData: builder.query<UserAuthenticatedType, void>({
             query: () => ({
                 url: "userinfo",
                 method: "GET"
             }),
         }),
-        logout: builder.mutation<void, {}>({
+        logout: builder.mutation<void, void>({
             query: () => ({
                 url: "logout",
                 method: "POST"

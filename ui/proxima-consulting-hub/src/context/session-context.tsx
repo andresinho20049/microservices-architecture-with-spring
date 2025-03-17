@@ -25,7 +25,10 @@ export const SessionContextProvider = ({
     children,
 }: SessionContextProviderType) => {
     const isAuthenticated = useAppSelector(state => state.auth.isAuthenticated);
-    useGetAuthDataQuery({skip: hasCookieClient(SESSION_BFF) && !isAuthenticated});
+
+    useGetAuthDataQuery(undefined, {
+        skip: hasCookieClient(SESSION_BFF) && !isAuthenticated
+    });
 
     return (
         <SessionContext.Provider value={{}}>

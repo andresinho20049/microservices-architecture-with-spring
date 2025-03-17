@@ -18,8 +18,8 @@ const graphqlApi = createApi({
                 body: JSON.stringify({query: useGraphQL().generateGraphQlBody("query", req)})
             }),
         }),
-        graphQLM: builder.mutation<void, {}>({
-            query: (body) => ({
+        graphQLM: builder.mutation<void, void>({
+            query: () => ({
                 url: "logout",
                 method: "POST"
             })
