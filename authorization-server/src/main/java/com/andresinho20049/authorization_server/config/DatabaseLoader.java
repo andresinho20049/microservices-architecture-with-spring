@@ -29,6 +29,12 @@ public class DatabaseLoader {
     @Value("${ADMIN_PASSWORD:password}")
     private String adminPassword;
 
+    @Value("${USER_USERNAME:admin}")
+    private String userUsername;
+
+    @Value("${USER_PASSWORD:password}")
+    private String userPassword;
+
     @Value("${RESOURCE_CLIENT_ID:resourceClient}")
 	private String resourceClient;
 
@@ -75,12 +81,23 @@ public class DatabaseLoader {
         });
 
         if (!userRepository.existsByUsername(adminUsername)) {
-            User user = new User()
+            User adminUser = new User()
                 .withUsername(adminUsername)
                 .withPassword(passwordEncoder.encode(adminPassword))
                 .withEnabled(Boolean.TRUE)
                 .withUpdatePassword(Boolean.FALSE)
                 .withRoles(Arrays.asList(adminRole))
+                .build();
+
+            userRepository.save(adminUser);
+        }
+
+        if (!userRepository.existsByUsername(userUsername)) {
+            User user = new User()
+                .withUsername(userUsername)
+                .withPassword(passwordEncoder.encode(userPassword))
+                .withEnabled(Boolean.TRUE)
+                .withUpdatePassword(Boolean.FALSE)
                 .build();
 
             userRepository.save(user);
