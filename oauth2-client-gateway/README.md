@@ -161,6 +161,11 @@ logging:
 > * `BFF_CLIENT_ID`
 > * `BFF_SECRET_ID`
 > * `AUTHORIZATION_HOST`
+> * `EUREKA_PROTOCOL`
+> * `EUREKA_USER`
+> * `EUREKA_PASS`
+> * `EUREKA_HOST`
+> * `EUREKA_PORT`
 
 ## Benefits of Using Spring Cloud Gateway
 
