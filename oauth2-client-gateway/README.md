@@ -30,8 +30,11 @@ This code is a configuration class for implementing Oauth2 security in a Spring 
 @EnableWebFluxSecurity
 public class SecurityConfig {
 	
-	@Autowired
 	private ReactiveClientRegistrationRepository clientRegistrationRepository;
+
+	public SecurityConfig(ReactiveClientRegistrationRepository clientRegistrationRepository) {
+		this.clientRegistrationRepository = clientRegistrationRepository;
+	}
 	
 	@Bean
 	SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
@@ -87,7 +90,11 @@ This project is configured with the `application.yml`:
 
 ```yaml
 server:
-  port: 8000
+  port: ${GATEWAY_PORT:8080}
+  reactive:
+    session:
+      cookie:
+        name: SESSION_BFF
 
 spring:
   application:
@@ -96,14 +103,6 @@ spring:
     oauth2:
       client:
         registration:
-          oidc-client:
-            client-id: ${RESOURCE_CLIENT_ID:resourceClient}
-            client-secret: ${RESOURCE_SECRET_ID:resourceSecret}
-            authorization-grant-type: authorization_code
-            redirect-uri: ${GATEWAY_HOST:http://localhost:8000}/login/oauth2/code/oidc-client
-            provider: spring
-            scope: openid,profile
-            client-name: oidc-client
           bff-client:
             client-id: ${BFF_CLIENT_ID:bffClient}
             client-secret: ${BFF_SECRET_ID:bffSecret}
@@ -117,17 +116,43 @@ spring:
             issuer-uri: ${AUTHORIZATION_HOST:http://localhost:9000}
   cloud:
     gateway:
-      routes:
-      - id: resource
-        uri: http://localhost:8001
-        predicates:
-        - Path=/api/**
-        filters: 
-        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
-        - TokenRelay=
-        - SaveSession
-        - StripPrefix=1
-      {...}
+      globalcors:
+        add-to-simple-url-handler-mapping: true
+        cors-configurations:
+          '[/**]':
+            allow-credentials: true
+            allowed-headers: '*'
+            allowed-origins: ${ALLOWS_CORS_ORIGIN:http://localhost:3000}
+            allowed-methods:
+            - GET
+            - POST
+            - PUT
+            - DELETE
+            - OPTIONS
+            - HEAD
+            exposed-headers:
+            - Access-Control-Allow-Origin
+            - Access-Control-Allow-Headers
+      default-filters:
+      - TokenRelay=bff-client
+      - SaveSession
+      - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+          
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_PROTOCOL:http}://${EUREKA_USER:eureka}:${EUREKA_PASS:eureka_pass}@${EUREKA_HOST:localhost}:${EUREKA_PORT:8761}/eureka
+      fetch-registry: true
+      register-with-eureka: true
+
+logging:
+  level:
+    root: info
+    '[com.andresinho20049]': debug
 ```
 
 > **Required environment variables:**
@@ -143,6 +168,17 @@ spring:
 * **High Performance:** WebFlux provides high performance and scalability, making it suitable for large-scale applications.
 * **Security:** Oauth2 authentication and rate limiting provide secure authentication and authorization for users.
 * **Flexibility:** Spring Cloud Gateway provides flexibility in configuring and managing APIs, making it suitable for diverse applications.
+
+## Using Eureka Server with Spring Cloud Gateway:
+Eureka Server is a service discovery mechanism that enables microservices to register and discover each other at runtime. When used in conjunction with Spring Cloud Gateway, Eureka Server provides several advantages:
+
+1.  **Decentralized Registration**: Eureka Server allows services to register themselves, enabling decentralized registration and making it easier to manage large-scale applications.
+2.  **Instance Discovery**: Eureka Server automatically detects instances of registered services, ensuring that only active instances are used in routing decisions.
+3.  **Load Balancing**: By actively monitoring and updating instance lists, Eureka Server facilitates load balancing and helps ensure that traffic is distributed efficiently.
+4.  **Automatic Fault Tolerance**: If an instance becomes unavailable, Eureka Server marks it as down, allowing Spring Cloud Gateway to route requests around the failing instance automatically.
+5.  **Enhanced Security**: By hosting service definitions and instance metadata in Eureka Server, Spring Cloud Gateway can enforce security-related obligations more effectively, such as authentication and authorization.
+
+To leverage these advantages, an application using Spring Cloud Gateway with Eureka Server would first need to register its services with Eureka Server. Then, when routing decisions are made, Spring Cloud Gateway would use the Eureka Server's list of active instances to determine the appropriate target for the request.
 
 ## Future Work
 *   **Implement Redis-based Session Store**: \
