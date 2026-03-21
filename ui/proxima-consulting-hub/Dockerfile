@@ -4,7 +4,7 @@ FROM node:23.7-alpine as base
 RUN apk update
 RUN apk add --no-cache bash
 RUN apk add --update npm
-RUN npm install -g npm@11.1.0
+RUN npm install -g npm@11.11.1
 
 ARG WORK_DIR=/opt/app
 
